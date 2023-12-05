@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.standout.sopang.goods.dto.GoodsDTO;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,7 @@ import com.standout.sopang.goods.vo.GoodsVO;
 
 import net.sf.json.JSONObject;
 
+@Log4j2
 @Controller("goodsController")
 @RequestMapping(value="/goods")
 public class GoodsControllerImpl extends BaseController   implements GoodsController {
@@ -69,7 +71,7 @@ public class GoodsControllerImpl extends BaseController   implements GoodsContro
 		String jsonInfo = jsonObject.toString();
 
 		//변환한 string jsonObject, jsonInfo 리턴
-		return jsonInfo ;
+		return jsonInfo;
 	}
 
 
@@ -78,6 +80,8 @@ public class GoodsControllerImpl extends BaseController   implements GoodsContro
 	public String searchGoods(String searchWord,Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<GoodsDTO> goodsList=goodsService.searchGoods(searchWord);
 		model.addAttribute("goodsList",goodsList);
+		log.info(searchWord);
+		log.info(goodsList);
 		return "/goods/searchGoods";
 	}
 
@@ -87,10 +91,12 @@ public class GoodsControllerImpl extends BaseController   implements GoodsContro
 	@RequestMapping(value="/goodsDetail" ,method = RequestMethod.GET)
 	public String goodsDetail(@RequestParam("goods_id") String goods_id, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session=request.getSession();
+
 //
 //		//goods_id값에 맞는 상세정보 가져와 goodsMap 할당
 		Map goodsMap=goodsService.goodsDetail(goods_id);
 		model.addAttribute("goodsMap", goodsMap);
+		log.info(goodsMap);
 
 //		//goodsMap을 goodsVO 객체에 대입
 		GoodsDTO goodsDTO=(GoodsDTO)goodsMap.get("goodsDTO");
@@ -102,28 +108,7 @@ public class GoodsControllerImpl extends BaseController   implements GoodsContro
 	return "/goods/goodsDetail";
 	}
 
-	//상품상세
 
-//	@RequestMapping(value="/goodsDetail.do" ,method = RequestMethod.GET)
-//	public ModelAndView goodsDetail(@RequestParam("goods_id") String goods_id,
-//			                       HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		String viewName=(String)request.getAttribute("viewName");
-//		ModelAndView mav = new ModelAndView(viewName);
-//		HttpSession session=request.getSession();
-//
-//		//goods_id값에 맞는 상세정보 가져와 goodsMap 할당
-//		Map goodsMap=goodsService.goodsDetail(goods_id);
-//		mav.addObject("goodsMap", goodsMap);
-//
-//		//goodsMap을 goodsVO 객체에 대입
-//		GoodsVO goodsVO=(GoodsVO)goodsMap.get("goodsVO");
-//
-//		//퀵메뉴에 방문한 해당 상품정보를 추가
-//		addGoodsInQuick(goods_id,goodsVO,session);
-//
-//		//뷰 + 상품상세 정보 리턴
-//		return mav;
-//	}
 	
 	
 	

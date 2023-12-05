@@ -90,7 +90,7 @@ public class TodoController {
     }
 
     @GetMapping("/list")
-    public String list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model){
+    public void list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model){
 
         log.info("/todo/list 겟매핑");
 
@@ -99,7 +99,6 @@ public class TodoController {
         }
         model.addAttribute("responseDTO", todoService.getList(pageRequestDTO));
 
-                return "/todo/list";
 
     }
 

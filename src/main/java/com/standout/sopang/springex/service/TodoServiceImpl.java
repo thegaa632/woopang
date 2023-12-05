@@ -28,7 +28,6 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public void register(TodoDTO todoDTO) {
 
-        log.info("Post register");
 
         TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class );
 
@@ -69,7 +68,6 @@ public class TodoServiceImpl implements TodoService{
 
         List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
 
-        log.info(voList);
 
         List<TodoDTO> dtoList = voList.stream()
                 .map(vo -> modelMapper.map(vo, TodoDTO.class))

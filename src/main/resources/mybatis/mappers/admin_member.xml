@@ -37,7 +37,12 @@
         WHERE DATE_FORMAT(joindate, '%Y-%m-%d') BETWEEN #{beginDate} AND #{endDate}
         ORDER BY joindate ASC
         ]]>
+
 </select>
+
+
+
+
 
 </mapper>
 
