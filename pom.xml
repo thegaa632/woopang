@@ -63,7 +63,11 @@
             <version>3.0.0</version> <!-- 원하는 ModelMapper 버전으로 변경 -->
         </dependency>
 
+<<<<<<< HEAD
 <!--123123-->
+=======
+
+>>>>>>> d028a974e75cfd351a7b5431efa7f5146c5468a7
         <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
