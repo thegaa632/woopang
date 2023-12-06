@@ -65,16 +65,15 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
 
-
+        //vo -> dto 리스트 조회하고 변경
         List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
-
 
         List<TodoDTO> dtoList = voList.stream()
                 .map(vo -> modelMapper.map(vo, TodoDTO.class))
                 .collect(Collectors.toList());
 
         int total = todoMapper.getCount(pageRequestDTO);
-
+        //pageResponseDTO에 TodoDTO 타입으로 빌드
         PageResponseDTO<TodoDTO> pageResponseDTO = PageResponseDTO.<TodoDTO>withAll()
                 .dtoList(dtoList)
                 .total(total)

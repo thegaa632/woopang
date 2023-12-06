@@ -1,6 +1,7 @@
 package com.standout.sopang.springex.controller;
 
 import com.standout.sopang.springex.dto.PageRequestDTO;
+import com.standout.sopang.springex.dto.PageResponseDTO;
 import com.standout.sopang.springex.dto.TodoDTO;
 import com.standout.sopang.springex.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller("TodoController")
@@ -90,16 +92,23 @@ public class TodoController {
     }
 
     @GetMapping("/list")
-    public void list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model){
+    @ResponseBody
+    public PageResponseDTO<TodoDTO> list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
 
         log.info("/todo/list 겟매핑");
+
+        TodoDTO dto;
 
         if(bindingResult.hasErrors()){
             pageRequestDTO = PageRequestDTO.builder().build();
         }
         model.addAttribute("responseDTO", todoService.getList(pageRequestDTO));
 
+        PageResponseDTO<TodoDTO> pageResponseDTO = todoService.getList(pageRequestDTO);
 
+        log.info("pageResponseDTO : " + pageResponseDTO);
+
+        return pageResponseDTO;
     }
 
 

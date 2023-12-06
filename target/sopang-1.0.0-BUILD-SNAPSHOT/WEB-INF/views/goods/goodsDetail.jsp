@@ -10,6 +10,9 @@
 <c:set var="goods" value="${goodsMap.goodsDTO}"/>
 <c:set var="imageList" value="${goodsMap.imageList }"/>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
 <div class="container">
     <div class="row">
@@ -146,10 +149,7 @@
 
                     <%--여긴 댓글 등록 부분--%>
                     <%--리스트 부분--%>
-                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-                          rel="stylesheet"
-                          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-                          crossorigin="anonymous">
+
                     <div class="container-fluid">
                         <div class="row">
                             <!-- 기존의 <h1>Header</h1> -->
@@ -235,22 +235,22 @@
                                                     <th scope="col">Finished</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
-                                                <c:forEach items="${dtoList}" var="dto">
-                                                    <tr>
-                                                        <th scope="row"><c:out value="${dto.tno}"/></th>
-                                                        <td>
-                                                            <a href="/todo/read?tno=${dto.tno}&${pageRequestDTO.link}"
-                                                               class="text-decoration-none" data-tno="${dto.tno}">
-                                                                <c:out value="${dto.title}"/>
-                                                            </a>
-                                                        </td>
-                                                        <td><c:out value="${dto.writer}"/></td>
-                                                        <td><c:out value="${dto.dueDate}"/></td>
-                                                        <td><c:out value="${dto.finished}"/></td>
-                                                    </tr>
-                                                </c:forEach>
-
+                                                <tbody id="boardData">
+                                                <!-- 여기에 Ajax로 받아온 데이터가 동적으로 추가될 것입니다. -->
+<%--                                                <c:forEach items="${dtoList}" var="dto">--%>
+<%--                                                    <tr>--%>
+<%--                                                        <th scope="row"><c:out value="${dto.tno}"/></th>--%>
+<%--                                                        <td>--%>
+<%--                                                            <a href="/todo/read?tno=${dto.tno}&${pageRequestDTO.link}"--%>
+<%--                                                               class="text-decoration-none" data-tno="${dto.tno}">--%>
+<%--                                                                <c:out value="${dto.title}"/>--%>
+<%--                                                            </a>--%>
+<%--                                                        </td>--%>
+<%--                                                        <td><c:out value="${dto.writer}"/></td>--%>
+<%--                                                        <td><c:out value="${dto.dueDate}"/></td>--%>
+<%--                                                        <td><c:out value="${dto.finished}"/></td>--%>
+<%--                                                    </tr>--%>
+<%--                                                </c:forEach>--%>
 
                                                 </tbody>
                                             </table>
@@ -259,24 +259,25 @@
 
                                             <div class="float-end">
                                                 <ul class="pagination flex-wrap">
-                                                    <c:if test="${responseDTO.prev}">
-                                                        <li class="page-item">
-                                                            <a class="page-link" data-num="${responseDTO.start -1}">Previous</a>
-                                                        </li>
-                                                    </c:if>
+                                                    <!-- 페이징을 동적으로 추가할 부분 -->
+<%--                                                    <c:if test="${responseDTO.prev}">--%>
+<%--                                                        <li class="page-item">--%>
+<%--                                                            <a class="page-link" data-num="${responseDTO.start -1}">Previous</a>--%>
+<%--                                                        </li>--%>
+<%--                                                    </c:if>--%>
 
-                                                    <c:forEach begin="${responseDTO.start}" end="${responseDTO.end}"
-                                                               var="num">
-                                                        <li class="page-item ${responseDTO.page == num? "active":""} ">
-                                                            <a class="page-link" data-num="${num}">${num}</a></li>
-                                                    </c:forEach>
+<%--                                                    <c:forEach begin="${responseDTO.start}" end="${responseDTO.end}"--%>
+<%--                                                               var="num">--%>
+<%--                                                        <li class="page-item ${responseDTO.page == num? "active":""} ">--%>
+<%--                                                            <a class="page-link" data-num="${num}">${num}</a></li>--%>
+<%--                                                    </c:forEach>--%>
 
-                                                    <c:if test="${responseDTO.next}">
-                                                        <li class="page-item">
-                                                            <a class="page-link"
-                                                               data-num="${responseDTO.end + 1}">Next</a>
-                                                        </li>
-                                                    </c:if>
+<%--                                                    <c:if test="${responseDTO.next}">--%>
+<%--                                                        <li class="page-item">--%>
+<%--                                                            <a class="page-link"--%>
+<%--                                                               data-num="${responseDTO.end + 1}">Next</a>--%>
+<%--                                                        </li>--%>
+<%--                                                    </c:if>--%>
                                                 </ul>
 
                                             </div>
@@ -316,18 +317,16 @@
 
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
+
 
 <script>
     // let responseDTO;
     // let dtoList;
     $(document).ready(function() {
         console.log("data run");
-        boardNumData();
-        boardInfoData();
+        // boardInfoData();
     });
+    document.getElementById("detailInfo03").addEventListener("click", boardNumData);
 
     function boardNumData() {
         // div를 클릭했을 때의 이벤트 핸들러
@@ -337,11 +336,63 @@
             type: "GET",
             url: "${contextPath}/todo/list", //  URL을 지정
             // data: responseDTO,
-            dataType: "STRING",
+            dataType: "JSON",
             success: function(data) {
                 let numData = data;
-                console.log('numData :' + numData);
+                console.log('numData :' + numData.Name);
                 console.log('데이터(data) 전송 성공(success)!');
+                // 테이블 데이터 출력
+                let boardData = document.getElementById("boardData");
+                boardData.innerHTML = ""; // 기존 데이터 초기화
+                let dtoListData = numData.dtoList;
+                dtoListData.forEach(function(dto) {
+                    let row = document.createElement("tr");
+
+                    let tnoCell = document.createElement("td");
+                    tnoCell.textContent = dto.tno;
+                    row.appendChild(tnoCell);
+
+                    let titleCell = document.createElement("td");
+                    let titleLink = document.createElement("a");
+                    titleLink.href = "/todo/read?tno=" + dto.tno;
+                    titleLink.textContent = dto.title;
+                    titleCell.appendChild(titleLink);
+                    row.appendChild(titleCell);
+
+                    let writerCell = document.createElement("td");
+                    writerCell.textContent = dto.writer;
+                    row.appendChild(writerCell);
+
+                    let dueDateCell = document.createElement("td");
+                    dueDateCell.textContent = dto.dueDate;
+                    row.appendChild(dueDateCell);
+
+                    let finishedCell = document.createElement("td");
+                    finishedCell.textContent = dto.finished;
+                    row.appendChild(finishedCell);
+
+                    boardData.appendChild(row);
+                });
+
+                // 페이징 데이터 출력 (responseDTO의 데이터 활용)
+                let pagination = document.querySelector(".pagination");
+                pagination.innerHTML = ""; // 기존 데이터 초기화
+
+                responseDTO = numData.pageRequestDTO;
+                // 페이징 처리 로직 추가
+                // responseDTO에서 start, end, page 등을 활용하여 페이지 번호를 동적으로 생성
+                for (let num = responseDTO.start; num <= responseDTO.end; num++) {
+                    let li = document.createElement("li");
+                    li.className = "page-item " + (responseDTO.page == num ? "active" : "");
+
+                    let a = document.createElement("a");
+                    a.className = "page-link";
+                    a.textContent = num;
+                    a.setAttribute("data-num", num);
+
+                    li.appendChild(a);
+                    pagination.appendChild(li);
+                }
             },
             // 서버로부터 받은 데이터를 처리
             error: function (xhr, status, error) {
@@ -349,26 +400,27 @@
             }
         });
     };
-    function boardInfoData() {
-        // div를 클릭했을 때의 이벤트 핸들러
-        console.log('클릭함');
-        // Ajax를 사용하여 서버에 데이터 요청
-        $.ajax({
-            type: "GET",
-            url: "${contextPath}/todo/list", //  URL을 지정
-            // data:dtoList,
-            dataType: "MAP",
-            success: function(data) {
-                let infoData = data;
-                console.log('infoData :' + infoData);
-                console.log('데이터(data) 전송 성공(success)!');
-            },
-            // 서버로부터 받은 데이터를 처리
-            error: function (xhr, status, error) {
-                console.error("Error loading data. Status: " + status + ", Error: " + error);
-            }
-        });
-    };
+    <%--function boardInfoData() {--%>
+    <%--    // div를 클릭했을 때의 이벤트 핸들러--%>
+    <%--    console.log('클릭함');--%>
+    <%--    // Ajax를 사용하여 서버에 데이터 요청--%>
+    <%--    $.ajax({--%>
+    <%--        type: "GET",--%>
+    <%--        url: "${contextPath}/todo/list", //  URL을 지정--%>
+    <%--        // data:dtoList,--%>
+    <%--        dataType: "JSON",--%>
+    <%--        success: function(data) {--%>
+    <%--            let infoData = data;--%>
+    <%--            console.log('infoData :' + infoData);--%>
+    <%--            console.log('데이터(data) 전송 성공(success)!');--%>
+    <%--            // setAttributes(infoData);--%>
+    <%--        },--%>
+    <%--        // 서버로부터 받은 데이터를 처리--%>
+    <%--        error: function (xhr, status, error) {--%>
+    <%--            console.error("Error loading data. Status: " + status + ", Error: " + error);--%>
+    <%--        }--%>
+    <%--    });--%>
+    <%--};--%>
 
     //장바구니 추가, goods_id정보를 넘겨줌.
     function add_cart(goods_id) {
