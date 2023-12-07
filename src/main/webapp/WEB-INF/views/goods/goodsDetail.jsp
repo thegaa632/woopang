@@ -236,22 +236,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody id="boardData">
-                                                <!-- 여기에 Ajax로 받아온 데이터가 동적으로 추가될 것입니다. -->
-                                                <%--                                                <c:forEach items="${dtoList}" var="dto">--%>
-                                                <%--                                                    <tr>--%>
-                                                <%--                                                        <th scope="row"><c:out value="${dto.tno}"/></th>--%>
-                                                <%--                                                        <td>--%>
-                                                <%--                                                            <a href="/todo/read?tno=${dto.tno}&${pageRequestDTO.link}"--%>
-                                                <%--                                                               class="text-decoration-none" data-tno="${dto.tno}">--%>
-                                                <%--                                                                <c:out value="${dto.title}"/>--%>
-                                                <%--                                                            </a>--%>
-                                                <%--                                                        </td>--%>
-                                                <%--                                                        <td><c:out value="${dto.writer}"/></td>--%>
-                                                <%--                                                        <td><c:out value="${dto.dueDate}"/></td>--%>
-                                                <%--                                                        <td><c:out value="${dto.finished}"/></td>--%>
-                                                <%--                                                    </tr>--%>
-                                                <%--                                                </c:forEach>--%>
-
+                                                <!-- 여기에 Ajax로 받아온 데이터가 동적으로 추가 -->
                                                 </tbody>
                                             </table>
 
@@ -259,7 +244,7 @@
 
                                             <div class="float-end">
                                                 <ul class="pagination flex-wrap" id="boardDataNum">
-
+                                                    <!-- 여기에 Ajax로 받아온 페이징 데이터가 동적으로 추가-->
                                                 </ul>
 
                                             </div>
@@ -306,56 +291,58 @@
     // let dtoList;
     $(document).ready(function () {
         console.log("data run");
-        // boardInfoData();
     });
     document.getElementById("detailInfo3").addEventListener("click", boardNumData);
-    document.getElementById("detailInfo3").addEventListener("click", pageing);
+    document.getElementById("detailInfo3").addEventListener("click", viewPageing);
+    document.getElementById("boardDataNum").addEventListener("click", function (event) {
+        movePageing(event);
+    });
 
     function boardNumData() {
         // div를 클릭했을 때의 이벤트 핸들러
         console.log('클릭함');
         // Ajax를 사용하여 서버에 데이터 요청
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "${contextPath}/todo/list", //  URL을 지정
             dataType: "JSON",
             success: function (data) {
-                let numData = data;
-                console.log('numData :' + numData.Name);
-                console.log('데이터(data) 전송 성공(success)!');
-                // 테이블 데이터 출력
-                let boardData = document.getElementById("boardData");
-                boardData.innerHTML = ""; // 기존 데이터 초기화
-                let dtoListData = numData.dtoList;
-                dtoListData.forEach(function (dto) {
-                    let row = document.createElement("tr");
-
-                    let tnoCell = document.createElement("td");
-                    tnoCell.textContent = dto.tno;
-                    row.appendChild(tnoCell);
-
-                    let titleCell = document.createElement("td");
-                    let titleLink = document.createElement("a");
-                    titleLink.href = "/todo/read?tno=" + dto.tno;
-                    titleLink.textContent = dto.title;
-                    titleCell.appendChild(titleLink);
-                    row.appendChild(titleCell);
-
-                    let writerCell = document.createElement("td");
-                    writerCell.textContent = dto.writer;
-                    row.appendChild(writerCell);
-
-                    let dueDateCell = document.createElement("td");
-                    dueDateCell.textContent = dto.dueDate;
-                    row.appendChild(dueDateCell);
-
-                    let finishedCell = document.createElement("td");
-                    finishedCell.textContent = dto.finished;
-                    row.appendChild(finishedCell);
-
-                    boardData.appendChild(row);
-                });
-                // 서버로부터 받은 데이터를 처리
+                updatePage(data);
+                // let numData = data;
+                // console.log('데이터(data) 전송 성공(success)!');
+                // // 테이블 데이터 출력
+                // let boardData = document.getElementById("boardData");
+                // boardData.innerHTML = ""; // 혹시 모를 기존 데이터 초기화
+                // let dtoListData = numData.dtoList;
+                // //받아온 데이터를 출력함
+                // dtoListData.forEach(function (dto) {
+                //     let row = document.createElement("tr");
+                //     //번호
+                //     let tnoCell = document.createElement("td");
+                //     tnoCell.textContent = dto.tno;
+                //     row.appendChild(tnoCell);
+                //     //제목
+                //     let titleCell = document.createElement("td");
+                //     let titleLink = document.createElement("a");
+                //     titleLink.href = "/todo/read?tno=" + dto.tno;
+                //     titleLink.textContent = dto.title;
+                //     titleCell.appendChild(titleLink);
+                //     row.appendChild(titleCell);
+                //     //글쓴이
+                //     let writerCell = document.createElement("td");
+                //     writerCell.textContent = dto.writer;
+                //     row.appendChild(writerCell);
+                //     //날짜
+                //     let dueDateCell = document.createElement("td");
+                //     dueDateCell.textContent = dto.dueDate;
+                //     row.appendChild(dueDateCell);
+                //     //확인여부
+                //     let finishedCell = document.createElement("td");
+                //     finishedCell.textContent = dto.finished;
+                //     row.appendChild(finishedCell);
+                //
+                //     boardData.appendChild(row);
+                // });
                 error: function e(xhr, status, error) {
                     console.error("Error loading data. Status: " + status + ", Error: " + error);
                 }
@@ -363,35 +350,35 @@
         });
     }
 
-    function pageing() {
+    function viewPageing() {
         // div를 클릭했을 때의 이벤트 핸들러
         console.log('클릭함');
         // Ajax를 사용하여 서버에 데이터 요청
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "${contextPath}/todo/list", //  URL을 지정
-            // data:dtoList,
             dataType: "JSON",
             success: function (data) {
-                let responseDTO = data;
-                console.log('responseDTO :' + responseDTO);
-                console.log('데이터(data) 전송 성공(success)!');
-                let boardDataNum = document.getElementById("boardDataNum");
-                boardDataNum.innerHTML = ""; // 기존 데이터 초기화
-                // 페이징 처리 로직 추가
-                // responseDTO에서 start, end, page 등을 활용하여 페이지 번호를 동적으로 생성
-                for (let num = responseDTO.start; num <= responseDTO.end; num++) {
-                    let li = document.createElement("li");
-                    li.className = "page-item " + (responseDTO.page == num ? "active" : "");
-
-                    let a = document.createElement("a");
-                    a.className = "page-link";
-                    a.textContent = num;
-                    a.setAttribute("data-num", num);
-
-                    li.appendChild(a);
-                    boardDataNum.appendChild(li);
-                }
+                updatePage(data);
+                // let responseDTO = data;
+                // console.log('데이터(data) 전송 성공(success)!');
+                // let boardDataNum = document.getElementById("boardDataNum");
+                // boardDataNum.innerHTML = ""; // 혹시 모를 기존 데이터 초기화
+                // // 페이징 처리 로직 추가
+                // // responseDTO에서 start, end, page 등을 활용하여 페이지 번호를 동적으로 생성
+                // for (let num = responseDTO.start; num <= responseDTO.end; num++) {
+                //     let li = document.createElement("li");
+                //     li.className = "page-item " + (responseDTO.page == num ? "active" : "");
+                //     //셀 생성하고 페이지 번호에 맞는 칸 추가
+                //     let a = document.createElement("a");
+                //     a.className = "page-link";
+                //     a.textContent = num;
+                //     a.setAttribute("data-num", num);
+                //
+                //     li.appendChild(a);
+                //     //번호부여
+                //     boardDataNum.appendChild(li);
+                // }
                 // 서버로부터 받은 데이터를 처리
                 error: function e(xhr, status, error) {
                     console.error("Error loading data. Status: " + status + ", Error: " + error);
@@ -400,71 +387,164 @@
         });
     }
 
-    //장바구니 추가, goods_id정보를 넘겨줌.
-    function add_cart(goods_id) {
-        $.ajax({
-            type: "post",
-            async: true,
-            url: "${contextPath}/cart/addGoodsInCart",
-            data: {goods_id: goods_id},
-            success: function (data, textStatus) {
-                if (data.trim() == 'add_success') {
-                    alert("장바구니에 추가되엇습니다.");
-                } else if (data.trim() == 'already_existed') {
-                    alert("이미 카트에 등록된 상품입니다.");
-                }
-            },
-            error: function (data, textStatus) {
-                // alert("data :" + data);
-                alert("로그인 후 추가하실 수 있습니다!");
-            },
-            complete: function (data, textStatus) {
-            }
-        });
+    function movePageing(event) {
+        console.log('이벤트 진입 :' + event);
+        if (event.target.tagName === "A") {
+            const clickedPage = parseInt(event.target.getAttribute("data-num"));
+            console.log(clickedPage);
+            //form을 이용해 페이지 데이터를 전송함
+            const formData = new FormData();
+            formData.append('page', clickedPage);
+// fetch는 JavaScript에서 제공하는 네트워크 요청을 간단하게 만들기 위한 API입니다.
+// fetch 함수는 Promise를 반환하며, 네트워크 요청을 만들고 응답을 처리하는 데 사용됩니다.
+            fetch(`${contextPath}/todo/list`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    //fetch는 404,500등 에러코드를 띄우지 않음으로 response.ok 함수를 이용하여 오류코드를 확인할수 있다.
+                    if (!response.ok) {
+                        const statusCode = response.status; //코드 오류
+                        const statusText = response.statusText; //오류 메시지
+
+                        // 오류 메시지를 생성하고 throw
+                        const errorMessage = `네트워크 오류가 발생함. Status: ${statusCode} ${statusText}`;
+                        throw new Error(errorMessage);
+                    }
+                    return response.json()
+                })
+                .then(newData => {
+                    // 받아온 데이터를 사용하여 페이지 업데이트
+                    updatePage(newData);
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
+        }
     }
+// 중복코드 처네!!!!!!!!!!!!!!!!!!!!!!!!!
+    function updatePage(data) {
+        console.log('new data 받음 :' + data);
+        let numData = data;
+        console.log('데이터(data) 전송 성공(success)!');
+        // 테이블 데이터 출력
+        let boardData = document.getElementById("boardData");
+        boardData.innerHTML = ""; // 혹시 모를 기존 데이터 초기화
+        let dtoListData = numData.dtoList;
+        //받아온 데이터를 출력함 일단 직접 넣는걸로...
+        dtoListData.forEach(function (dto) {
+            let row = document.createElement("tr");
+            //번호
+            let tnoCell = document.createElement("td");
+            tnoCell.textContent = dto.tno;
+            row.appendChild(tnoCell);
+            //제목
+            let titleCell = document.createElement("td");
+            let titleLink = document.createElement("a");
+            titleLink.href = "/todo/read?tno=" + dto.tno;
+            titleLink.textContent = dto.title;
+            titleCell.appendChild(titleLink);
+            row.appendChild(titleCell);
+            //글쓴이
+            let writerCell = document.createElement("td");
+            writerCell.textContent = dto.writer;
+            row.appendChild(writerCell);
+            //날짜
+            let dueDateCell = document.createElement("td");
+            dueDateCell.textContent = dto.dueDate;
+            row.appendChild(dueDateCell);
+            //확인여부
+            let finishedCell = document.createElement("td");
+            finishedCell.textContent = dto.finished;
+            row.appendChild(finishedCell);
 
+            boardData.appendChild(row);
+        })
+        let responseDTO = data; //햇갈리니까 responseDTO 그대로 사용함
+        let boardDataNum = document.getElementById("boardDataNum");
+        boardDataNum.innerHTML = ""; // 혹시 모를 기존 데이터 초기화
+        // 페이징 처리 로직 추가
+        // responseDTO에서 start, end, page 등을 활용하여 페이지 번호를 동적으로 생성
+        for (let num = responseDTO.start; num <= responseDTO.end; num++) {
+            let li = document.createElement("li");
+            li.className = "page-item " + (responseDTO.page == num ? "active" : "");
+            //셀 생성하고 페이지 번호에 맞는 칸 추가
+            let a = document.createElement("a");
+            a.className = "page-link";
+            a.textContent = num;
+            a.setAttribute("data-num", num);
 
-    //바로 주문하기
-    function fn_order_each_goods(goods_id, goods_title, goods_sales_price, fileName) {
-        var total_price, final_total_price;
-        var order_goods_qty = document.getElementById("order_goods_qty");
-        var formObj = document.createElement("form");
-        var i_goods_id = document.createElement("input");
-        var i_goods_title = document.createElement("input");
-        var i_goods_sales_price = document.createElement("input");
-        var i_fileName = document.createElement("input");
-        var i_order_goods_qty = document.createElement("input");
+            li.appendChild(a);
 
-        let memberName = "${memberInfo.member_name }";
-
-        if (memberName == "") {
-            alert("로그인 후 구매하실 수 있습니다!");
-        }/* 로그인상태가 아닌경우 안내함. */
-        else {
-            i_goods_id.name = "goods_id";
-            i_goods_title.name = "goods_title";
-            i_goods_sales_price.name = "goods_sales_price";
-            i_fileName.name = "goods_fileName";
-            i_order_goods_qty.name = "order_goods_qty";
-            i_goods_id.value = goods_id;
-            i_order_goods_qty.value = 1;//i_order_goods_qty 1로 고정
-            i_goods_title.value = goods_title;
-            i_goods_sales_price.value = goods_sales_price;
-            i_fileName.value = fileName;
-
-//formObj에 해당 상품 정보를 할당해 orderEachGoods로 action
-            formObj.appendChild(i_goods_id);
-            formObj.appendChild(i_goods_title);
-            formObj.appendChild(i_goods_sales_price);
-            formObj.appendChild(i_fileName);
-            formObj.appendChild(i_order_goods_qty);
-            document.body.appendChild(formObj);
-
-            formObj.method = "post";
-            formObj.action = "${contextPath}/order/orderEachGoods";
-            formObj.submit();
+            //번호부여
+            boardDataNum.appendChild(li);
+        }
+    }
+        //장바구니 추가, goods_id정보를 넘겨줌.
+        function add_cart(goods_id) {
+            $.ajax({
+                type: "post",
+                async: true,
+                url: "${contextPath}/cart/addGoodsInCart",
+                data: {goods_id: goods_id},
+                success: function (data, textStatus) {
+                    if (data.trim() == 'add_success') {
+                        alert("장바구니에 추가되엇습니다.");
+                    } else if (data.trim() == 'already_existed') {
+                        alert("이미 카트에 등록된 상품입니다.");
+                    }
+                },
+                error: function (data, textStatus) {
+                    // alert("data :" + data);
+                    alert("로그인 후 추가하실 수 있습니다!");
+                },
+                complete: function (data, textStatus) {
+                }
+            });
         }
 
-    }
+
+        //바로 주문하기
+        function fn_order_each_goods(goods_id, goods_title, goods_sales_price, fileName) {
+            var total_price, final_total_price;
+            var order_goods_qty = document.getElementById("order_goods_qty");
+            var formObj = document.createElement("form");
+            var i_goods_id = document.createElement("input");
+            var i_goods_title = document.createElement("input");
+            var i_goods_sales_price = document.createElement("input");
+            var i_fileName = document.createElement("input");
+            var i_order_goods_qty = document.createElement("input");
+
+            let memberName = "${memberInfo.member_name }";
+
+            if (memberName == "") {
+                alert("로그인 후 구매하실 수 있습니다!");
+            }/* 로그인상태가 아닌경우 안내함. */
+            else {
+                i_goods_id.name = "goods_id";
+                i_goods_title.name = "goods_title";
+                i_goods_sales_price.name = "goods_sales_price";
+                i_fileName.name = "goods_fileName";
+                i_order_goods_qty.name = "order_goods_qty";
+                i_goods_id.value = goods_id;
+                i_order_goods_qty.value = 1;//i_order_goods_qty 1로 고정
+                i_goods_title.value = goods_title;
+                i_goods_sales_price.value = goods_sales_price;
+                i_fileName.value = fileName;
+
+//formObj에 해당 상품 정보를 할당해 orderEachGoods로 action
+                formObj.appendChild(i_goods_id);
+                formObj.appendChild(i_goods_title);
+                formObj.appendChild(i_goods_sales_price);
+                formObj.appendChild(i_fileName);
+                formObj.appendChild(i_order_goods_qty);
+                document.body.appendChild(formObj);
+
+                formObj.method = "post";
+                formObj.action = "${contextPath}/order/orderEachGoods";
+                formObj.submit();
+            }
+
+        }
 </script>
 

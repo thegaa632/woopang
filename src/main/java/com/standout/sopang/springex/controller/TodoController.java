@@ -91,11 +91,11 @@ public class TodoController {
         return "redirect:/todo/read";
     }
 
-    @GetMapping("/list")
     @ResponseBody
+    @RequestMapping(value = "/list", method = {RequestMethod.POST})
     public PageResponseDTO<TodoDTO> list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
 
-        log.info("/todo/list 겟매핑");
+        log.info("/todo/list ");
 
         TodoDTO dto;
 
