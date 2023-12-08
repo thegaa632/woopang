@@ -28,7 +28,7 @@
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav">
                                 <a class="nav-link active" aria-current="page" href="#">Home</a>
-                                <a class="nav-link" href="#">Features</a>
+                                <a class="nav-link" id="register">등록버튼 눌러줘</a>
                                 <a class="nav-link" href="#">Pricing</a>
                                 <a class="nav-link disabled">Disabled</a>
                             </div>
@@ -54,9 +54,14 @@
                             </div>
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text">DueDate</span>
-                                <input type="date" name="dueDate" class="form-control" placeholder="Writer">
+                                <span class="input-group-text">content</span>
+                                <input type="text" name="content" class="form-control" placeholder="content">
                             </div>
+
+<%--                            <div class="input-group mb-3">--%>
+<%--                                <span class="input-group-text">DueDate</span>--%>
+<%--                                <input type="date" name="dueDate" class="form-control" placeholder="Writer">--%>
+<%--                            </div>--%>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Writer</span>
@@ -65,7 +70,7 @@
 
                             <div class="my-4">
                                 <div class="float-end">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary" id="add">Submit</button>
                                     <button type="result" class="btn btn-secondary">Reset</button>
                                 </div>
                             </div>
@@ -108,7 +113,8 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
 </body>
 </html>
+<script>document.getElementById("add").addEventListener("click", function() {
+    history.go(-1);})</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

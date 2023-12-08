@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @Controller("TodoController")
@@ -37,28 +36,28 @@ public class TodoController {
                                RedirectAttributes redirectAttributes) {
 
         log.info("POST todo register.......");
-
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             log.info("has errors.......");
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors() );
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/todo/register";
         }
 
         todoService.register(todoDTO);
-
-        return "redirect:/todo/list";
+        return "redirect:/main/main";
     }
+
     @GetMapping({"/read", "/modify"})
-    public void read(Long tno, PageRequestDTO pageRequestDTO, Model model){
+    public void read(Long tno, PageRequestDTO pageRequestDTO, Model model) {
 
         TodoDTO todoDTO = todoService.getOne(tno);
         log.info(todoDTO);
 
-        model.addAttribute("dto", todoDTO );
+        model.addAttribute("dto", todoDTO);
 
     }
+
     @PostMapping("/remove")
-    public String remove(Long tno, PageRequestDTO pageRequestDTO, RedirectAttributes redirectAttributes){
+    public String remove(Long tno, PageRequestDTO pageRequestDTO, RedirectAttributes redirectAttributes) {
 
         log.info("-------------remove------------------");
         log.info("tno: " + tno);
@@ -70,15 +69,15 @@ public class TodoController {
 
     @PostMapping("/modify")
     public String modify(
-                        PageRequestDTO pageRequestDTO,
-                        @Valid TodoDTO todoDTO,
-                         BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes){
+            PageRequestDTO pageRequestDTO,
+            @Valid TodoDTO todoDTO,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             log.info("has errors.......");
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors() );
-            redirectAttributes.addAttribute("tno", todoDTO.getTno() );
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addAttribute("tno", todoDTO.getTno());
             return "redirect:/todo/modify";
         }
 
@@ -91,25 +90,33 @@ public class TodoController {
         return "redirect:/todo/read";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/list", method = {RequestMethod.POST})
-    public PageResponseDTO<TodoDTO> list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
+    //    @ResponseBody
+    @RequestMapping(value = "/list", method = {RequestMethod.GET})
+    public void list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model){
 
-        log.info("/todo/list ");
-
-        TodoDTO dto;
+        log.info(pageRequestDTO);
 
         if(bindingResult.hasErrors()){
             pageRequestDTO = PageRequestDTO.builder().build();
         }
         model.addAttribute("responseDTO", todoService.getList(pageRequestDTO));
-
-        PageResponseDTO<TodoDTO> pageResponseDTO = todoService.getList(pageRequestDTO);
-
-        log.info("pageResponseDTO : " + pageResponseDTO);
-
-        return pageResponseDTO;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/list", method = {RequestMethod.POST})
+    public PageResponseDTO<TodoDTO> list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
+        log.info("/todo/list ");
+
+        TodoDTO dto;
+
+        if (bindingResult.hasErrors()) {
+            pageRequestDTO = PageRequestDTO.builder().build();
+        }
+        model.addAttribute("responseDTO", todoService.getList(pageRequestDTO));
+
+        PageResponseDTO<TodoDTO> pageResponseDTO = todoService.getList(pageRequestDTO);
+        log.info("pageResponseDTO 입니다. : " + pageResponseDTO);
+        return pageResponseDTO;
+    }
 }

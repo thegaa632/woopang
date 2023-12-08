@@ -37,7 +37,7 @@
 <!--    </select>-->
 
     <insert id="insert" parameterType="todoVO" >
-        insert into tbl_todo (title, dueDate, writer, finished) values  (#{title}, NOW(), #{writer}, 0)
+        insert into tbl_todo (title,content, dueDate, writer, finished) values  (#{title}, #{content}, NOW(), #{writer}, 0)
     </insert>
 
 
@@ -57,7 +57,7 @@
     </delete>
 
     <update id="update">
-        update tbl_todo set title = #{title} , dueDate = NOW(), finished= #{finished} where tno = #{tno}
+        update tbl_todo set title = #{title} ,content = #{content}, dueDate = NOW(), finished= #{finished} where tno = #{tno}
     </update>
 
     <!--    <select id="selectList" resultType="domain.com.standout.sopang.springex.TodoVO">-->

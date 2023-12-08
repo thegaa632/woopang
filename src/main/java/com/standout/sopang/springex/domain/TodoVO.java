@@ -3,7 +3,8 @@ package com.standout.sopang.springex.domain;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Date;
+//import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
 
 @Getter
@@ -17,7 +18,8 @@ public class TodoVO {
 
     private String title;
 
-//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private String content;
+
     private Date dueDate;
 
     private String writer;
