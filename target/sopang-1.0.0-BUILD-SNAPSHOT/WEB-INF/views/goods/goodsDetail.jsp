@@ -1,5 +1,3 @@
-<%@ page import="com.standout.sopang.springex.controller.TodoController" %>
-<%@ page import="com.standout.sopang.springex.service.TodoService" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" isELIgnored="false" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
@@ -145,304 +143,188 @@
                 <div class="tab-pane" id="detailInfo03" role="tabpanel"
                      aria-labelledby="detailInfo3">
                     <%--여긴 댓글 등록 부분--%>
-
-                    <%--여긴 댓글 등록 부분--%>
                     <%--리스트 부분--%>
-<%--                    <div class="container-fluid">--%>
-<%--                        <div class="row">--%>
-<%--                            <!-- 기존의 <h1>Header</h1> -->--%>
-<%--                            <div class="row">--%>
-<%--                                <div class="col">--%>
-<%--                                    <nav class="navbar navbar-expand-lg navbar-light bg-light">--%>
-<%--                                        <div class="container-fluid">--%>
-<%--                                            <a class="navbar-brand" href="#">Navbar</a>--%>
-<%--                                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"--%>
-<%--                                                    data-bs-target="#navbarNavAltMarkup"--%>
-<%--                                                    aria-controls="navbarNavAltMarkup" aria-expanded="false"--%>
-<%--                                                    aria-label="Toggle navigation">--%>
-<%--                                                <span class="navbar-toggler-icon"></span>--%>
-<%--                                            </button>--%>
-<%--                                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">--%>
-<%--                                                <div class="navbar-nav">--%>
-<%--                                                    <a class="nav-link active" aria-current="page" href="#">Home</a>--%>
-<%--                                                    <a class="nav-link" onclick="register()">이것은 등록 버튼 입니다.</a>--%>
-<%--                                                    <a class="nav-link" href="#">Pricing</a>--%>
-<%--                                                    <a class="nav-link disabled">Disabled</a>--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                    </nav>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <!-- header end -->--%>
-<%--                            <!-- 기존의 <h1>Header</h1>끝 -->--%>
-<%--                            <div class="row content">--%>
-<%--                                <div class="col">--%>
-<%--                                    <div class="card">--%>
-<%--                                        <div class="card-body">--%>
-<%--                                            <h5 class="card-title">Search </h5>--%>
-<%--                                            <form action="/todo/list" method="post">--%>
-<%--                                                <input type="hidden" name="size" value="${pageRequestDTO.size}">--%>
-<%--                                                <div class="mb-3">--%>
-<%--                                                    <input type="checkbox"--%>
-<%--                                                           name="finished" ${pageRequestDTO.finished?"checked":""} >완료여부--%>
-<%--                                                </div>--%>
-<%--                                                <div class="mb-3">--%>
-<%--                                                    <input type="checkbox" name="types"--%>
-<%--                                                           value="t" ${pageRequestDTO.checkType("t")?"checked":""}>제목--%>
-<%--                                                    <input type="checkbox" name="types"--%>
-<%--                                                           value="w"  ${pageRequestDTO.checkType("w")?"checked":""}>작성자--%>
-<%--                                                    <input type="text" name="keyword" class="form-control"--%>
-<%--                                                           value='<c:out value="${pageRequestDTO.keyword}"/>'>--%>
-<%--                                                </div>--%>
-<%--                                                <div class="input-group mb-3 dueDateDiv">--%>
-<%--                                                    <input type="date" name="from" class="form-control"--%>
-<%--                                                           value="${pageRequestDTO.from}">--%>
-<%--                                                    <input type="date" name="to" class="form-control"--%>
-<%--                                                           value="${pageRequestDTO.to}">--%>
-<%--                                                </div>--%>
-<%--                                                <div class="input-group mb-3">--%>
-<%--                                                    <div class="float-end">--%>
-<%--                                                        <button class="btn btn-primary" type="submit">Search</button>--%>
-<%--                                                        <button class="btn btn-info clearBtn" type="reset">Clear--%>
-<%--                                                        </button>--%>
-<%--                                                    </div>--%>
-<%--                                                </div>--%>
-<%--                                            </form>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                            <div class="row content">--%>
-<%--                                <div class="col">--%>
-<%--                                    <div class="card">--%>
-<%--                                        <div class="card-header">--%>
-<%--                                            Featured--%>
-<%--                                        </div>--%>
-<%--                                        <div class="card-body">--%>
-<%--                                            <h5 class="card-title">Special title treatment</h5>--%>
-<%--                                            <table class="table">--%>
-<%--                                                <thead>--%>
-<%--                                                <tr>--%>
-<%--                                                    <th scope="col">Tno</th>--%>
-<%--                                                    <th scope="col">Title</th>--%>
-<%--                                                    <th scope="col">content</th>--%>
-<%--                                                    <th scope="col">Writer</th>--%>
-<%--                                                    <th scope="col">DueDate</th>--%>
-<%--                                                    <th scope="col">Finished</th>--%>
-<%--                                                </tr>--%>
-<%--                                                </thead>--%>
-<%--                                                <tbody id="boardData">--%>
-<%--                                                <!-- 여기에 Ajax로 받아온 데이터가 동적으로 추가 -->--%>
-<%--                                                </tbody>--%>
-<%--                                            </table>--%>
-
-<%--                                            </table>--%>
-
-<%--                                            <div class="float-end">--%>
-<%--                                                <ul class="pagination flex-wrap" id="boardDataNum">--%>
-<%--                                                    <!-- 여기에 Ajax로 받아온 페이징 데이터가 동적으로 추가-->--%>
-<%--                                                </ul>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div class="row content">--%>
-<%--                        </div>--%>
-<%--                        <div class="row footer">--%>
-<%--                            <!--<h1>Footer</h1>-->--%>
-<%--                            <div class="row   fixed-bottom" style="z-index: -100">--%>
-<%--                                <footer class="py-1 my-1 ">--%>
-<%--                                    <p class="text-center text-muted">Footer</p>--%>
-<%--                                </footer>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-                    <%--리스트 부분--%>
-                    <div id="result">
-                    </div>
+                    <!-- QnA 및 문의사항 정보 -->
                 </div>
-                <!-- QnA 및 문의사항 정보 -->
+                <!-- tab 본문 -->
             </div>
-            <!-- tab 본문 -->
+            <!-- 하단 상품상세정보 -->
 
         </div>
-        <!-- 하단 상품상세정보 -->
-
-
     </div>
-</div>
-<%--<script src="${contextPath}/resources/js/goodsboard.js"></script>--%>
+    <%--<script src="${contextPath}/resources/js/goodsboard.js"></script>--%>
 
-<script>
-    document.getElementById("detailInfo3").addEventListener("click", boardNumData);
-    // document.getElementById("boardDataNum").addEventListener("click", function (event) {movePageing(event);});
-    // document.getElementById("detailInfo3").addEventListener("click", boardList);
-    // document.getElementById("detailInfo3").addEventListener("click", viewPageing);
+    <script>
+        document.getElementById("detailInfo3").addEventListener("click", boardNumData);
 
-    function boardNumData() {
-        // div를 클릭했을 때의 이벤트 핸들러
-        // location.reload();
-        console.log('html클릭함');
-        // Ajax를 사용하여 서버에 데이터 요청
-        $.ajax({
-            type: "GET",
-            url: "${contextPath}/todo/list", //  URL을 지정
-            dataType: "HTML",
-            success: function (data) {
-                // let htmlData = data;
-                let htmlLocation = document.getElementById("detailInfo03");
-                // console.log("data : "+ data);
-                htmlLocation.innerHTML = data;
-                boardList();
-                viewPageing();
-                error: function e(xhr, status, error) {
-                    console.error("Error loading data. Status: " + status + ", Error: " + error);
-                }
-            }
-        });
-    }
-    function boardList() {
-        // div를 클릭했을 때의 이벤트 핸들러
-        // location.reload();
-        console.log('json클릭함');
-        // Ajax를 사용하여 서버에 데이터 요청
-        $.ajax({
-            type: "POST",
-            url: "${contextPath}/todo/list", //  URL을 지정
-            dataType: "JSON",
-            success: function (data) {
-                updatePage(data);
-                error: function e(xhr, status, error) {
-                    console.error("Error loading data. Status: " + status + ", Error: " + error);
-                }
-            }
-        });
-    }
+        let elements = document.getElementsByClassName("viewRead");
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].addEventListener("click", viewread);
+        }
 
-    function viewPageing() {
-        // div를 클릭했을 때의 이벤트 핸들러
-        console.log('json클릭함');
-        // Ajax를 사용하여 서버에 데이터 요청
-        $.ajax({
-            type: "POST",
-            url: "${contextPath}/todo/list", //  URL을 지정
-            dataType: "JSON",
-            success: function (data) {
-                updatePage(data);
-                error: function e(xhr, status, error) {
-                    console.error("Error loading data. Status: " + status + ", Error: " + error);
-                }
-            }
-        });
-    }
-
-    function movePageing(event) {
-        console.log('이벤트 진입 :' + event);
-        if (event.target.tagName === "A") {
-            const clickedPage = parseInt(event.target.getAttribute("data-num"));
-            console.log(clickedPage);
-            //form을 이용해 페이지 데이터를 전송함
-            const formData = new FormData();
-            formData.append('page', clickedPage);
-// fetch는 JavaScript에서 제공하는 네트워크 요청을 간단하게 만들기 위한 API입니다.
-// fetch 함수는 Promise를 반환하며, 네트워크 요청을 만들고 응답을 처리하는 데 사용됩니다.
-            fetch(`${contextPath}/todo/list`, {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    //fetch는 404,500등 에러코드를 띄우지 않음으로 response.ok 함수를 이용하여 오류코드를 확인할수 있다.
-                    if (!response.ok) {
-                        const statusCode = response.status; //코드 오류
-                        const statusText = response.statusText; //오류 메시지
-
-                        // 오류 메시지를 생성하고 throw
-                        const errorMessage = `네트워크 오류가 발생함. Status: ${statusCode} ${statusText}`;
-                        throw new Error(errorMessage);
+        function boardNumData() {
+            // div를 클릭했을 때의 이벤트 핸들러
+            console.log('html클릭함');
+            // Ajax를 사용하여 서버에 데이터 요청
+            $.ajax({
+                type: "GET",
+                url: "${contextPath}/todo/list", //  URL을 지정
+                dataType: "HTML",
+                success: function (data) {
+                    let htmlLocation = document.getElementById("detailInfo03");
+                    htmlLocation.innerHTML = data;
+                    boardList();
+                    document.getElementById("boardDataNum").addEventListener("click", function (event) {
+                        movePageing(event);
+                        document.getElementById("viewRegister").addEventListener("click", function (event) {
+                            register(event);
+                        });
+                    });
+                    error: function e(xhr, status, error) {
+                        console.error("Error loading data. Status: " + status + ", Error: " + error);
                     }
-                    return response.json()
-                })
-                .then(newData => {
-                    // 받아온 데이터를 사용하여 페이지 업데이트
-                    updatePage(newData);
-                })
-                .catch(error => {
-                    console.error("Error fetching data:", error);
-                });
+                }
+            });
         }
-    }
-    // 중복코드 처네!!!!!!!!!!!!!!!!!!!!!!!!!
-    function updatePage(data) {
-        //<======게시판 목록 부분======>
-        console.log('new data 받음 :' + data);
-        let numData = data;
-        console.log('데이터(data) 전송 성공(success)!');
-        // 테이블 데이터 출력
-        let boardData = document.getElementById("boardData");
-        boardData.innerHTML = ""; // 혹시 모를 기존 데이터 초기화
-        let dtoListData = numData.dtoList;
-        //받아온 데이터를 출력함 일단 직접 넣는걸로...
-        dtoListData.forEach(function (dto) {
-            let row = document.createElement("tr");
-            //번호
-            let tnoCell = document.createElement("td");
-            tnoCell.textContent = dto.tno;
-            row.appendChild(tnoCell);
-            //제목
-            let titleCell = document.createElement("td");
-            let titleLink = document.createElement("a");
-            titleLink.href = "/todo/read?tno=" + dto.tno;
-            titleLink.textContent = dto.title;
-            titleCell.appendChild(titleLink);
-            row.appendChild(titleCell);
-            //내용
-            let contentCell = document.createElement("td");
-            contentCell.textContent = dto.content;
-            row.appendChild(contentCell);
-            //글쓴이
-            let writerCell = document.createElement("td");
-            writerCell.textContent = dto.writer;
-            row.appendChild(writerCell);
-            //날짜
-            let dueDateCell = document.createElement("td");
-            dueDateCell.textContent = dto.dueDate;
-            row.appendChild(dueDateCell);
-            //확인여부
-            let finishedCell = document.createElement("td");
-            finishedCell.textContent = dto.finished;
-            row.appendChild(finishedCell);
 
-            boardData.appendChild(row);
+        function boardList() {
+            // div를 클릭했을 때의 이벤트 핸들러
+            console.log('json클릭함');
+            // Ajax를 사용하여 서버에 데이터 요청
+            $.ajax({
+                type: "POST",
+                url: "${contextPath}/todo/list", //  URL을 지정
+                dataType: "JSON",
+                success: function (data) {
+                    updatePage(data);
+                    error: function e(xhr, status, error) {
+                        console.error("Error loading data. Status: " + status + ", Error: " + error);
+                    }
+                }
+            });
+        }
+
+        function viewread() {
+            // div를 클릭했을 때의 이벤트 핸들러
+            console.log('json클릭함');
+            // Ajax를 사용하여 서버에 데이터 요청
+            $.ajax({
+                type: "POST",
+                url: "${contextPath}/todo/read?tno=" + dto.tno, //  URL을 지정
+                dataType: "html",
+                success: function (data) {
+                    // updatePage(data);
+                    error: function e(xhr, status, error) {
+                        console.error("Error loading data. Status: " + status + ", Error: " + error);
+                    }
+                }
+            });
+        }
+
+        function movePageing(event) {
+            console.log('이벤트 진입 :' + event);
+            if (event.target.tagName === "A") {
+                const clickedPage = parseInt(event.target.getAttribute("data-num"));
+                console.log(clickedPage);
+                //form을 이용해 페이지 데이터를 전송함
+                const formData = new FormData();
+                formData.append('page', clickedPage);
+                // fetch는 JavaScript에서 제공하는 네트워크 요청을 간단하게 만들기 위한 API입니다.
+                // fetch 함수는 Promise를 반환하며, 네트워크 요청을 만들고 응답을 처리하는 데 사용됩니다.
+                fetch(`${contextPath}/todo/list`, {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        //fetch는 404,500등 에러코드를 띄우지 않음으로 response.ok 함수를 이용하여 오류코드를 확인할수 있다.
+                        if (!response.ok) {
+                            const statusCode = response.status; //코드 오류
+                            const statusText = response.statusText; //오류 메시지
+
+                            // 오류 메시지를 생성하고 throw
+                            const errorMessage = `네트워크 오류가 발생함. Status: ${statusCode} ${statusText}`;
+                            throw new Error(errorMessage);
+                        }
+                        return response.json()
+                    })
+                    .then(newData => {
+                        // 받아온 데이터를 사용하여 페이지 업데이트
+                        updatePage(newData);
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data:", error);
+                    });
+            }
+        }
+
+        // 중복코드 처네!!!!!!!!!!!!!!!!!!!!!!!!!
+        function updatePage(data) {
             //<======게시판 목록 부분======>
-        })
-        //<======게시판 페이징 부분======>
-        let responseDTO = data; //햇갈리니까 responseDTO 그대로 사용함
-        let boardDataNum = document.getElementById("boardDataNum");
-        boardDataNum.innerHTML = ""; // 혹시 모를 기존 데이터 초기화
-        // 페이징 처리 로직 추가
-        // responseDTO에서 start, end, page 등을 활용하여 페이지 번호를 동적으로 생성
-        for (let num = responseDTO.start; num <= responseDTO.end; num++) {
-            let li = document.createElement("li");
-            li.className = "page-item " + (responseDTO.page == num ? "active" : "");
-            //셀 생성하고 페이지 번호에 맞는 칸 추가
-            let a = document.createElement("a");
-            a.className = "page-link";
-            a.textContent = num;
-            a.setAttribute("data-num", num);
+            console.log('new data 받음 :' + data);
+            let numData = data;
+            console.log('데이터(data) 전송 성공(success)!');
+            // 테이블 데이터 출력
+            let boardData = document.getElementById("boardData");
+            boardData.innerHTML = ""; // 혹시 모를 기존 데이터 초기화
+            let dtoListData = numData.dtoList;
+            //받아온 데이터를 출력함 일단 직접 넣는걸로...
+            dtoListData.forEach(function (dto) {
+                let row = document.createElement("tr");
+                //번호
+                let tnoCell = document.createElement("td");
+                tnoCell.textContent = dto.tno;
+                row.appendChild(tnoCell);
+                //제목
+                let titleCell = document.createElement("td");
+                let titleLink = document.createElement("a");
+                titleLink.href = "/todo/read?tno=" + dto.tno;
+                titleLink.textContent = dto.title;
+                titleLink.setAttribute("class", "viewRead");
+                titleCell.appendChild(titleLink);
+                row.appendChild(titleCell);
+                //내용
+                let contentCell = document.createElement("td");
+                contentCell.textContent = dto.content;
+                row.appendChild(contentCell);
+                //글쓴이
+                let writerCell = document.createElement("td");
+                writerCell.textContent = dto.writer;
+                row.appendChild(writerCell);
+                //날짜
+                let dueDateCell = document.createElement("td");
+                dueDateCell.textContent = dto.dueDate;
+                row.appendChild(dueDateCell);
+                //확인여부
+                let finishedCell = document.createElement("td");
+                finishedCell.textContent = dto.finished;
+                row.appendChild(finishedCell);
 
-            li.appendChild(a);
+                boardData.appendChild(row);
 
-            //번호부여
-            boardDataNum.appendChild(li);
+                //<======게시판 목록 부분======>
+            })
             //<======게시판 페이징 부분======>
-            // history.pushState({ page: url }, "", url);
+            let responseDTO = data; //햇갈리니까 responseDTO 그대로 사용함
+            let boardDataNum = document.getElementById("boardDataNum");
+            boardDataNum.innerHTML = ""; // 혹시 모를 기존 데이터 초기화
+            // 페이징 처리 로직 추가
+            // responseDTO에서 start, end, page 등을 활용하여 페이지 번호를 동적으로 생성
+            for (let num = responseDTO.start; num <= responseDTO.end; num++) {
+                let li = document.createElement("li");
+                li.className = "page-item " + (responseDTO.page == num ? "active" : "");
+                //셀 생성하고 페이지 번호에 맞는 칸 추가
+                let a = document.createElement("a");
+                a.className = "page-link";
+                a.textContent = num;
+                a.setAttribute("data-num", num);
+                li.appendChild(a);
+                //번호부여
+                boardDataNum.appendChild(li);
+                //<======게시판 페이징 부분======>
+                // history.pushState({ page: url }, "", url);
+            }
         }
-    }
+
         //장바구니 추가, goods_id정보를 넘겨줌.
         function add_cart(goods_id) {
             $.ajax({
@@ -458,7 +340,6 @@
                     }
                 },
                 error: function (data, textStatus) {
-                    // alert("data :" + data);
                     alert("로그인 후 추가하실 수 있습니다!");
                 },
                 complete: function (data, textStatus) {
@@ -495,7 +376,7 @@
                 i_goods_sales_price.value = goods_sales_price;
                 i_fileName.value = fileName;
 
-//formObj에 해당 상품 정보를 할당해 orderEachGoods로 action
+                //formObj에 해당 상품 정보를 할당해 orderEachGoods로 action
                 formObj.appendChild(i_goods_id);
                 formObj.appendChild(i_goods_title);
                 formObj.appendChild(i_goods_sales_price);
@@ -507,47 +388,24 @@
                 formObj.action = "${contextPath}/order/orderEachGoods";
                 formObj.submit();
             }
-
         }
 
-        function register() {
-    $.ajax({
-        type: "POST",
-        url: "${contextPath}/todo/register",
-        data: "HTML",
-        success: function (data) {
-            console.log("성공 : " + data);
-            detailInfo03.innerHTML = data;
-        },
-        error: function e(xhr, status, error) {
-            console.error("Error loading data. Status: " + status + ", Error: " + error);
+        function register(event) {
+            console.log("register 진입")
+            $.ajax({
+                type: "POST",
+                url: "${contextPath}/todo/register",
+                data: "HTML",
+                success: function (data) {
+                    console.log("성공 : " + data);
+                    detailInfo03.innerHTML = data;
+                },
+                error: function e(xhr, status, error) {
+                    console.error("Error loading data. Status: " + status + ", Error: " + error);
+                }
+            })
         }
-    })
-    <%--        fetch(`${contextPath}/todo/register`, {--%>
-    <%--            method: 'POST',--%>
-    <%--            body: formData--%>
-    <%--        })--%>
-    <%--            .then(response => {--%>
-    <%--                //fetch는 404,500등 에러코드를 띄우지 않음으로 response.ok 함수를 이용하여 오류코드를 확인할수 있다.--%>
-    <%--                if (!response.ok) {--%>
-    <%--                    const statusCode = response.status; //코드 오류--%>
-    <%--                    const statusText = response.statusText; //오류 메시지--%>
-
-    <%--                    // 오류 메시지를 생성하고 throw--%>
-    <%--                    const errorMessage = `네트워크 오류가 발생함. Status: ${statusCode} ${statusText}`;--%>
-    <%--                    throw new Error(errorMessage);--%>
-    <%--                }--%>
-    <%--                return response.json()--%>
-    <%--            })--%>
-    <%--            .then(newData => {--%>
-    <%--                // 받아온 데이터를 사용하여 페이지 업데이트--%>
-    <%--                updatePage(newData);--%>
-    <%--            })--%>
-    <%--            .catch(error => {--%>
-    <%--                console.error("Error fetching data:", error);--%>
-    <%--            });--%>
-        }
-</script>
+    </script>
 
 
 

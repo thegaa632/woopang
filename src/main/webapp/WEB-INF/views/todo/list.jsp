@@ -118,6 +118,8 @@
                         </table>
 
                         </table>
+                        <button id="viewRegister">register</button>
+
 
                         <div class="float-end">
                             <ul class="pagination flex-wrap" id="boardDataNum">
@@ -140,63 +142,7 @@
                             </ul>
 
                         </div>
-
-                        <script>
-
-                            /* document.querySelector(".pagination").addEventListener("click", function (e) {
-                                    e.preventDefault()
-                                    e.stopPropagation()
-
-                                    const target = e.target
-
-
-                                    if(target.tagName !== 'A') {
-                                        return
-                                    }
-                                    const num = target.getAttribute("data-num")
-
-                                    self.location = `/todo/list?page=\${num}` //백틱(` `)을 이용해서 템플릿 처리
-                                },false)*/
-                            document.getElementById("boardDataNum").addEventListener("click", function (event) {
-                                movePageing(event);
-                            });
-
-                            function movePageing(event) {
-                                console.log('이벤트 진입 :' + event);
-                                if (event.target.tagName === "A") {
-                                    const clickedPage = parseInt(event.target.getAttribute("data-num"));
-                                    console.log(clickedPage);
-                                    //form을 이용해 페이지 데이터를 전송함
-                                    const formData = new FormData();
-                                    formData.append('page', clickedPage);
-// fetch는 JavaScript에서 제공하는 네트워크 요청을 간단하게 만들기 위한 API
-// fetch 함수는 Promise를 반환하며, 네트워크 요청을 만들고 응답을 처리하는 데 사용됨
-                                    fetch(`${contextPath}/todo/list`, {
-                                        method: 'POST',
-                                        body: formData
-                                    })
-                                        .then(response => {
-                                            //fetch는 404,500등 에러코드를 띄우지 않음으로 response.ok 함수를 이용하여 오류코드를 확인할수 있다.
-                                            if (!response.ok) {
-                                                const statusCode = response.status; //코드 오류
-                                                const statusText = response.statusText; //오류 메시지
-
-                                                // 오류 메시지를 생성하고 throw
-                                                const errorMessage = `네트워크 오류가 발생함. Status: ${statusCode} ${statusText}`;
-                                                throw new Error(errorMessage);
-                                            }
-                                            return response.json()
-                                        })
-                                        .then(newData => {
-                                            // 받아온 데이터를 사용하여 페이지 업데이트
-                                            updatePage(newData);
-                                        })
-                                        .catch(error => {
-                                            console.error("Error fetching data:", error);
-                                        });
-                                }
-                            }
-
+                    <script>
                             document.querySelector(".pagination").addEventListener("click", function (e) {
                                 e.preventDefault()
                                 e.stopPropagation()
@@ -215,8 +161,6 @@
                                 formObj.submit();
 
                             }, false)
-
-
                             document.querySelector(".clearBtn").addEventListener("click", function (e) {
                                 e.preventDefault()
                                 e.stopPropagation()
@@ -224,12 +168,8 @@
                                 self.location = '/todo/list'
 
                             }, false)
-
-
                         </script>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -240,7 +180,7 @@
     <div class="row footer">
         <!--<h1>Footer</h1>-->
 
-        <div class="row   fixed-bottom" style="z-index: -100">
+        <div class="row fixed-bottom" style="z-index: -100">
             <footer class="py-1 my-1 ">
                 <p class="text-center text-muted">Footer</p>
             </footer>
