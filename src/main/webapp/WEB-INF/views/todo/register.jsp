@@ -28,9 +28,9 @@
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav">
                                 <a class="nav-link active" aria-current="page" href="#">Home</a>
-                                <a class="nav-link" id="register">등록버튼 눌러줘</a>
-                                <a class="nav-link" href="#">Pricing</a>
-                                <a class="nav-link disabled">Disabled</a>
+                                <a class="nav-link" id="register">연</a>
+                                <a class="nav-link" href="#">습</a>
+                                <a class="nav-link disabled">용</a>
                             </div>
                         </div>
                     </div>
@@ -70,13 +70,28 @@
 
                             <div class="my-4">
                                 <div class="float-end">
-                                    <button type="submit" class="btn btn-primary" id="add">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                     <button type="result" class="btn btn-secondary">Reset</button>
                                 </div>
                             </div>
+<%--                            <input type="hidden" name="goods_id" value="${goods_id}">--%>
+                            <script>
+                                window.onload = function() {
+                                    console.log("레지스터 실행됨");
+                                    urlData = window.location.href;
+                                    let url = new URL(urlData);
+                                    let goods_id = url.searchParams.get("goods_id");
+                                    console.log("goods_id : " + goods_id);
+                                }
+
+                            </script>
+
                         </form>
 
                         <script>
+                            window.onload = function() {
+                                console.log("레지스터 실행됨");
+                            }
 
                             const serverValidResult = {}
 
@@ -115,6 +130,20 @@
 
 </body>
 </html>
-<script>document.getElementById("add").addEventListener("click", function() {
-    history.go(-1);})</script>
+<script>
+
+    // document.getElementById("add").addEventListener("click", function(event) {
+    // event.preventDefault();
+    // console.log("서브밋 진입");
+    // let add = document.getElementById("add");
+    // Promise.all([boardNumData(), add.submit()])
+    //     .then(results => {
+    //     console.log("모든 작업이 완료되었습니다.");
+    // })
+    //     .catch(error => {
+    //         console.error("에러 발생: ", error);
+    //     });
+// })
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

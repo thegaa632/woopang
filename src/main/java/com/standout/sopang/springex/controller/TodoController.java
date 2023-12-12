@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 
 @Controller("TodoController")
@@ -25,35 +26,54 @@ public class TodoController {
     @Autowired
     private final TodoService todoService;
 
+    String goodsIdValue;
+
     @GetMapping("/register")
-    public void registerGET() {
+    public void register() {
         log.info("GET todo register.......");
+//        log.info("goods_id : " + goods_id);
+//        goods_id1 = goods_id.toString();
+//
+//        String[] parts = goods_id1.split("=");
+//        String goods_id1 = parts[1];
+//        String[] parts1 = goods_id1.split("}");
+//        goods_id1 = parts1[0];
+//        log.info("goods_id1 :" + goods_id1);
+//
+//        model.addAttribute("goods_id", goods_id1);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerPost(@Valid TodoDTO todoDTO,
-                               BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes) {
+    public String register(@Valid TodoDTO todoDTO,
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes,
+                           @RequestParam Map<String, Object> goods_id,
+                           Model model
+    ) {
 
         log.info("POST todo register.......");
+
+        log.info("goods_id : " + goods_id);
+
+        model.addAttribute("totalModel", goods_id);
         if (bindingResult.hasErrors()) {
             log.info("has errors.......");
+            goodsIdValue = (String) goods_id.get("goods_id");
+            log.info("goodsIdValue : " + goodsIdValue);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/todo/register";
         }
-
         todoService.register(todoDTO);
-        return "redirect:/main/main";
+        return "redirect:/goods/goodsDetail?goods_id="+goodsIdValue;
     }
 
     @GetMapping({"/read", "/modify"})
-    public void read(Long tno, PageRequestDTO pageRequestDTO, Model model) {
+    public void read(Long tno, Model model) {
 
         TodoDTO todoDTO = todoService.getOne(tno);
         log.info(todoDTO);
 
         model.addAttribute("dto", todoDTO);
-
     }
 
     @PostMapping("/remove")
@@ -87,26 +107,20 @@ public class TodoController {
 
         redirectAttributes.addAttribute("tno", todoDTO.getTno());
 
-        return "redirect:/todo/read";
+        return "redirect:#";
     }
 
     //    @ResponseBody
     @RequestMapping(value = "/list", method = {RequestMethod.GET})
-    public void list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model){
-
-        log.info(pageRequestDTO);
-
-        if(bindingResult.hasErrors()){
-            pageRequestDTO = PageRequestDTO.builder().build();
-        }
-        model.addAttribute("responseDTO", todoService.getList(pageRequestDTO));
+    public void list() {
+        log.info("list get 호출");
     }
 
     @ResponseBody
     @RequestMapping(value = "/list", method = {RequestMethod.POST})
     public PageResponseDTO<TodoDTO> list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
-        log.info("/todo/list ");
+        log.info("list post 호출");
 
         TodoDTO dto;
 
