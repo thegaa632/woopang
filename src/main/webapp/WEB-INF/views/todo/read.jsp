@@ -61,14 +61,14 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">DueDate</span>
                             <input type="date" name="dueDate" class="form-control"
-                                   value=<c:out value="${dto.dueDate}"></c:out> readonly>
+                                   value=<c:out value="${dto.dueDate}"></c:out> >
 
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">Writer</span>
                             <input type="text" name="writer" class="form-control"
-                                   value=<c:out value="${dto.writer}"></c:out> readonly>
+                                   value='<c:out value="${dto.writer}"></c:out>' readonly>
 
                         </div>
 
@@ -81,35 +81,13 @@
 
                         <div class="my-4">
                             <div class="float-end">
-                                <button type="button" class="btn btn-primary" id="viewRegister" name="modify">Modify</button>
+                                <button class="btn btn-primary" id="modify" name="modify" onclick="modify()">Modify</button>
                                 <button type="button" class="btn btn-secondary" onclick="boardNumData()">List</button>
                             </div>
                         </div>
 
                         <script>
-                            /*document.querySelector(".btn-primary").addEventListener("click", function(e){
-                                self.location = "/todo/modify?tno="+${dto.tno}
-                            },false)*/
 
-
-                            document.querySelector(".btn-primary").addEventListener("click", function(e){
-
-                                self.location = `/todo/modify?tno=${dto.tno}&${pageRequestDTO.link}`
-
-                            },false)
-
-
-
-                            // document.querySelector(".btn-secondary").addEventListener("click", function(e){
-                            //     self.location = "/todo/list";
-                            // },false)
-
-                            //목록 페이지로 이동하는 이벤트 처리
-                            document.querySelector(".btn-secondary").addEventListener("click", function(e){
-
-                                self.location = "/todo/list?${pageRequestDTO.link}"
-
-                            },false)
 
                         </script>
 

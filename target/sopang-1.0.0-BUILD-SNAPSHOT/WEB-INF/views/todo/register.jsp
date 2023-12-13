@@ -58,10 +58,6 @@
                                 <input type="text" name="content" class="form-control" placeholder="content">
                             </div>
 
-<%--                            <div class="input-group mb-3">--%>
-<%--                                <span class="input-group-text">DueDate</span>--%>
-<%--                                <input type="date" name="dueDate" class="form-control" placeholder="Writer">--%>
-<%--                            </div>--%>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Writer</span>

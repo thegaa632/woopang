@@ -118,7 +118,7 @@
                         </table>
 
                         </table>
-                        <button id="viewRegister" name="register">register</button>
+                        <button id="viewReg_Mod" name="register">register</button>
 
 
                         <div class="float-end">
