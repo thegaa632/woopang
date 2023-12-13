@@ -155,7 +155,7 @@
     <%--<script src="${contextPath}/resources/js/goodsboard.js"></script>--%>
 
     <script>
-        $(document).ready(function (){
+        $(document).ready(function () {
 
         })
         document.getElementById("detailInfo3").addEventListener("click", boardNumData);
@@ -179,14 +179,16 @@
                     boardList();
                     document.getElementById("boardDataNum").addEventListener("click", function (event) {
                         movePageing(event);
-                        document.getElementById("viewread").addEventListener("click", function (event) {
-                            register(event);
-                        });
                     });
+
                     document.getElementById("viewRegister").addEventListener("click", function (event) {
                         register(event);
                     });
-
+                    // let elements = document.getElementsByName(data);
+                    // elements.addEventListener("click", function (event) {
+                    //     console.log("viewread 진입");
+                    //     viewread(event);
+                    // });
                     // document.getElementById("viewread").addEventListener("click", function (event) {
                     //     register(event);
                     // });
@@ -217,14 +219,17 @@
 
         function viewread(event) {
             // div를 클릭했을 때의 이벤트 핸들러
-            console.log('json클릭함');
+            console.log('viewread 클릭함');
+            let tno = event.target.getAttribute('name');
+            console.log("tno : " + tno);
             // Ajax를 사용하여 서버에 데이터 요청
             $.ajax({
                 type: "POST",
-                url: "${contextPath}/todo/read?tno=" + list.dtoList.tno, //  URL을 지정
+                url: "${contextPath}/todo/read?tno=" + tno, //  URL을 지정
                 dataType: "html",
                 success: function (data) {
-                    // updatePage(data);
+                    let htmlLocation = document.getElementById("detailInfo03");
+                    htmlLocation.innerHTML = data;
                     error: function e(xhr, status, error) {
                         console.error("Error loading data. Status: " + status + ", Error: " + error);
                     }
@@ -288,9 +293,10 @@
                 //제목
                 let titleCell = document.createElement("td");
                 let titleLink = document.createElement("a");
-                titleLink.href = "/todo/read?tno=" + dto.tno;
+                // titleLink.href = "/todo/read?tno=" + dto.tno;
                 titleLink.textContent = dto.title;
-                titleLink.setAttribute("class", "viewRead" + dto.tno);
+                titleLink.setAttribute("onclick", "viewread(event)");
+                titleLink.setAttribute("name", dto.tno);
                 titleCell.appendChild(titleLink);
                 row.appendChild(titleCell);
                 //내용
@@ -406,78 +412,71 @@
             let url = new URL(urlData);
             let goods_id = url.searchParams.get("goods_id");
             console.log("goods_id : " + goods_id);
-
             console.log("register 진입");
-            $.ajax({
-                type: "post",
-                url: "${contextPath}/todo/register",
-                data:{"goods_id": goods_id},
-                dataType: "html",
-                success: function (data) {
-                    console.log("register 로딩 성공");
-                    detailInfo03.innerHTML = data;
-                },
-                error: function e(xhr, status, error) {
-                    console.error("Error loading data. Status: " + status + ", Error: " + error);
-                }
-            })
+            let select = event.target.getAttribute('name');
+            if (select === "register") {
+                console.log("register 진입")
+                $.ajax({
+                    type: "post",
+                    url: "${contextPath}/todo/register",
+                    data: {"goods_id": goods_id},
+                    dataType: "html",
+                    success: function (data) {
+                        console.log("register 로딩 성공");
+                        detailInfo03.innerHTML = data;
+                    },
+                    error: function e(xhr, status, error) {
+                        console.error("Error loading data. Status: " + status + ", Error: " + error);
+                    }
+                })
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "${contextPath}/todo/modify",
+                    data: {"goods_id": goods_id},
+                    dataType: "html",
+                    success: function (data) {
+                        console.log("modify 로딩 성공");
+                        detailInfo03.innerHTML = data;
+                    },
+                    error: function e(xhr, status, error) {
+                        console.error("Error loading data. Status: " + status + ", Error: " + error);
+                    }
+                })
+            }
         }
 
-        function modify(event) {
-            console.log("modify 진입")
-            $.ajax({
-                type: "POST",
-                url: "${contextPath}/todo/modify",
-                data: "HTML",
-                success: function (data) {
-                    console.log("성공 : " + data);
-                    detailInfo03.innerHTML = data;
-                    // document.getElementById("add").addEventListener("click", function (event) {
-                    //     event.preventDefault();
-                    //     console.log("서브밋 클릭 진입");
-                    //     let add = document.getElementById("add");
-                    //     Promise.all([boardNumData(), add.submit()])
-                    //         .then(results => {
-                    //             console.log("모든 작업이 완료되었습니다.");
-                    //         })
-                    //         .catch(error => {
-                    //             console.error("에러 발생: ", error);
-                    //         });
-                    // })
-                },
-                error: function e(xhr, status, error) {
-                    console.error("Error loading data. Status: " + status + ", Error: " + error);
-                }
-            })
-        }
+        <%--function modify(event) {--%>
+        <%--    console.log("modify 진입")--%>
+        <%--    $.ajax({--%>
+        <%--        type: "POST",--%>
+        <%--        url: "${contextPath}/todo/modify",--%>
+        <%--        data: "HTML",--%>
+        <%--        success: function (data) {--%>
+        <%--            console.log("성공 : " + data);--%>
+        <%--            detailInfo03.innerHTML = data;--%>
+        <%--        },--%>
+        <%--        error: function e(xhr, status, error) {--%>
+        <%--            console.error("Error loading data. Status: " + status + ", Error: " + error);--%>
+        <%--        }--%>
+        <%--    })--%>
+        <%--}--%>
 
-        function read(event) {
-            console.log("read 진입")
-            $.ajax({
-                type: "POST",
-                url: "${contextPath}/todo/read?tno=",
-                data: "HTML",
-                success: function (data) {
-                    console.log("성공 : " + data);
-                    detailInfo03.innerHTML = data;
-                    // document.getElementById("add").addEventListener("click", function (event) {
-                    //     event.preventDefault();
-                    //     console.log("서브밋 클릭 진입");
-                    //     let add = document.getElementById("add");
-                    //     Promise.all([boardNumData(), add.submit()])
-                    //         .then(results => {
-                    //             console.log("모든 작업이 완료되었습니다.");
-                    //         })
-                    //         .catch(error => {
-                    //             console.error("에러 발생: ", error);
-                    //         });
-                    // })
-                },
-                error: function e(xhr, status, error) {
-                    console.error("Error loading data. Status: " + status + ", Error: " + error);
-                }
-            })
-        }
+        <%--function read(event) {--%>
+        <%--    console.log("read 진입")--%>
+        <%--    $.ajax({--%>
+        <%--        type: "POST",--%>
+        <%--        url: "${contextPath}/todo/read?tno=",--%>
+        <%--        data: "HTML",--%>
+        <%--        success: function (data) {--%>
+        <%--            console.log("성공 : " + data);--%>
+        <%--            detailInfo03.innerHTML = data;--%>
+        <%--        },--%>
+        <%--        error: function e(xhr, status, error) {--%>
+        <%--            console.error("Error loading data. Status: " + status + ", Error: " + error);--%>
+        <%--        }--%>
+        <%--    })--%>
+        <%--}--%>
     </script>
 
 

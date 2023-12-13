@@ -118,7 +118,7 @@
                         </table>
 
                         </table>
-                        <button id="viewRegister">register</button>
+                        <button id="viewRegister" name="register">register</button>
 
 
                         <div class="float-end">

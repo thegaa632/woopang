@@ -75,17 +75,6 @@
                                 </div>
                             </div>
 <%--                            <input type="hidden" name="goods_id" value="${goods_id}">--%>
-                            <script>
-                                window.onload = function() {
-                                    console.log("레지스터 실행됨");
-                                    urlData = window.location.href;
-                                    let url = new URL(urlData);
-                                    let goods_id = url.searchParams.get("goods_id");
-                                    console.log("goods_id : " + goods_id);
-                                }
-
-                            </script>
-
                         </form>
 
                         <script>

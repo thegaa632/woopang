@@ -81,8 +81,8 @@
 
                         <div class="my-4">
                             <div class="float-end">
-                                <button type="button" class="btn btn-primary">Modify</button>
-                                <button type="button" class="btn btn-secondary" id="getList">List</button>
+                                <button type="button" class="btn btn-primary" id="viewRegister" name="modify">Modify</button>
+                                <button type="button" class="btn btn-secondary" onclick="boardNumData()">List</button>
                             </div>
                         </div>
 
