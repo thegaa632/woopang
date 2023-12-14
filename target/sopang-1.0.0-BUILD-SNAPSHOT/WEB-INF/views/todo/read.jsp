@@ -60,8 +60,8 @@
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">DueDate</span>
-                            <input type="date" name="dueDate" class="form-control"
-                                   value=<c:out value="${dto.dueDate}"></c:out> >
+                            <input type="datetime-local" name="dueDate" class="form-control"
+                                   value=<c:out value="${dto.dueDate}"></c:out> readonly>
 
                         </div>
 
@@ -81,16 +81,10 @@
 
                         <div class="my-4">
                             <div class="float-end">
-                                <button class="btn btn-primary" id="modify" name="modify" onclick="modify()">Modify</button>
+                                <button class="btn btn-primary" id="modify" name="modify" value="${dto.tno}">Modify</button>
                                 <button type="button" class="btn btn-secondary" onclick="boardNumData()">List</button>
                             </div>
                         </div>
-
-                        <script>
-
-
-                        </script>
-
 
                     </div>
                 </div>
@@ -111,7 +105,11 @@
 
     </div>
 </div>
-
+<script>
+    function modify1() {
+        console.log("dto :"+${dto});
+    }
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 

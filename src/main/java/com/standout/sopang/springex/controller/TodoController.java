@@ -47,18 +47,13 @@ public class TodoController {
     public String register(@Valid TodoDTO todoDTO,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes,
-                           @RequestParam Map<String, Object> goods_id,
                            Model model
     ) {
 
         log.info("POST todo register.......");
-        log.info("goods_id : " + goods_id);
 
-        model.addAttribute("totalModel", goods_id);
         if (bindingResult.hasErrors()) {
             log.info("has errors.......");
-            goodsIdValue = (String) goods_id.get("goods_id");
-            log.info("goodsIdValue : " + goodsIdValue);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/todo/register";
         }
@@ -67,7 +62,7 @@ public class TodoController {
     }
 
     @GetMapping({"/read", "/modify"})
-    public void read(Long tno, Model model) {
+    public void read(Long tno, PageRequestDTO pageRequestDTO, Model model) {
 
         TodoDTO todoDTO = todoService.getOne(tno);
         log.info("todoDTO : "+ todoDTO);
@@ -84,15 +79,16 @@ public class TodoController {
 
         todoService.remove(tno);
 
-        return "redirect:/todo/list?" + pageRequestDTO.getLink();
+        return "redirect:/goods/goodsDetail?goods_id="+goodsIdValue;
     }
 
     @PostMapping("/modify")
     public String modify(
-            PageRequestDTO pageRequestDTO,
             @Valid TodoDTO todoDTO,
             BindingResult bindingResult,
+            PageRequestDTO pageRequestDTO,
             RedirectAttributes redirectAttributes) {
+        log.info("todoDTO : "+ todoDTO);
 
         if (bindingResult.hasErrors()) {
             log.info("has errors.......");
@@ -107,22 +103,25 @@ public class TodoController {
 
         redirectAttributes.addAttribute("tno", todoDTO.getTno());
 
-        return "redirect:";
+        return "redirect:/goods/goodsDetail?goods_id="+goodsIdValue;
     }
 
     //    @ResponseBody
     @RequestMapping(value = "/list", method = {RequestMethod.GET})
-    public void list() {
+    public void list( @RequestParam Map<String, Object> goods_id, Model model) {
         log.info("list get 호출");
+        model.addAttribute("totalModel", goods_id);
+        log.info("goods_id :" + goods_id);
+        goodsIdValue = (String) goods_id.get("goods_id");
+        log.info("goodsIdValue :"+ goodsIdValue);
     }
 
     @ResponseBody
     @RequestMapping(value = "/list", method = {RequestMethod.POST})
-    public PageResponseDTO<TodoDTO> list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+    public PageResponseDTO<TodoDTO> list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                         Model model) {
 
         log.info("list post 호출");
-
-        TodoDTO dto;
 
         if (bindingResult.hasErrors()) {
             pageRequestDTO = PageRequestDTO.builder().build();

@@ -84,16 +84,16 @@
                         Featured
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
+                        <h5 class="card-title">한줄평가</h5>
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">Tno</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">content</th>
-                                <th scope="col">Writer</th>
-                                <th scope="col">DueDate</th>
-                                <th scope="col">Finished</th>
+                                <th scope="col">번호</th>
+                                <th scope="col">제목</th>
+                                <th scope="col">글 내용</th>
+                                <th scope="col">작성자</th>
+                                <th scope="col">등록일자</th>
+                                <th scope="col">답변여부</th>
                             </tr>
                             </thead>
                             <tbody id="boardData">
@@ -118,7 +118,7 @@
                         </table>
 
                         </table>
-                        <button id="viewReg_Mod" name="register">register</button>
+                        <button id="register" name="register">register</button>
 
 
                         <div class="float-end">

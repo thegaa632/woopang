@@ -18,6 +18,8 @@ public class TodoDTO {
 
     private Long tno;
 
+    private Long tno_number;
+
     @NotEmpty
     private String title;
 
