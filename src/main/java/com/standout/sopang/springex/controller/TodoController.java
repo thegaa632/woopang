@@ -1,10 +1,12 @@
 package com.standout.sopang.springex.controller;
 
+import com.standout.sopang.member.dto.MemberDTO;
 import com.standout.sopang.springex.dto.PageRequestDTO;
 import com.standout.sopang.springex.dto.PageResponseDTO;
 import com.standout.sopang.springex.dto.TodoDTO;
 import com.standout.sopang.springex.service.TodoService;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -26,39 +31,45 @@ public class TodoController {
     @Autowired
     private final TodoService todoService;
 
-    String goodsIdValue;
+    @Autowired
+    private MemberDTO memberDTO;
+
+    private int goods_id_t_shopping_goods;
 
     @GetMapping("/register")
     public void register() {
         log.info("GET todo register.......");
-//        log.info("goods_id : " + goods_id);
-//        goods_id1 = goods_id.toString();
-//
-//        String[] parts = goods_id1.split("=");
-//        String goods_id1 = parts[1];
-//        String[] parts1 = goods_id1.split("}");
-//        goods_id1 = parts1[0];
-//        log.info("goods_id1 :" + goods_id1);
-//
-//        model.addAttribute("goods_id", goods_id1);
+
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@Valid TodoDTO todoDTO,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes,
-                           Model model
+                           HttpServletRequest request, HttpServletResponse response
     ) {
 
-        log.info("POST todo register.......");
+        log.info("POST todo register......."+todoDTO.toString());
+        HttpSession session=request.getSession();
+        memberDTO=(MemberDTO)session.getAttribute("memberInfo");
+        log.info("memberDTO : " + memberDTO.toString());
+        String member_id=memberDTO.getMember_id();
+
+        if(member_id == null) {
+            log.info("로그인 정보 없음");
+           return "noId";
+        }
 
         if (bindingResult.hasErrors()) {
-            log.info("has errors.......");
+            log.info("값을 입력해야함");
+            log.info("todoDTO : "+ todoDTO);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/todo/register";
         }
+
+        log.info("todoDTO : " + todoDTO);
         todoService.register(todoDTO);
-        return "redirect:/goods/goodsDetail?goods_id="+goodsIdValue;
+        return "redirect:/goods/goodsDetail?goods_id="+todoDTO.getGoods_id_t_shopping_goods();
     }
 
     @GetMapping({"/read", "/modify"})
@@ -72,14 +83,14 @@ public class TodoController {
 
 
     @PostMapping("/remove")
-    public String remove(Long tno, PageRequestDTO pageRequestDTO, RedirectAttributes redirectAttributes) {
+    public String remove(Long tno, TodoDTO todoDTO) {
 
         log.info("-------------remove------------------");
         log.info("tno: " + tno);
 
         todoService.remove(tno);
 
-        return "redirect:/goods/goodsDetail?goods_id="+goodsIdValue;
+        return "redirect:/goods/goodsDetail?goods_id="+todoDTO.getGoods_id_t_shopping_goods();
     }
 
     @PostMapping("/modify")
@@ -87,33 +98,40 @@ public class TodoController {
             @Valid TodoDTO todoDTO,
             BindingResult bindingResult,
             PageRequestDTO pageRequestDTO,
-            RedirectAttributes redirectAttributes) {
-        log.info("todoDTO : "+ todoDTO);
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request) {
 
+        HttpSession session=request.getSession();
+        memberDTO=(MemberDTO)session.getAttribute("memberInfo");
+        String member_id=memberDTO.getMember_id();
+
+        if(todoDTO.getWriter() == null) {
+            todoDTO = todoService.getOne(todoDTO.getTno()); //tno 값을 가지고 새로운 todoDTO 데이터를 받아옴
+            log.info("todoDTO : " + todoDTO.getWriter());
+            log.info("member_id : "+ member_id);
+        }
+        if(!member_id.equals(todoDTO.getWriter())) {
+            log.info("작성자가 아님");
+            return "noWriter";
+        }
         if (bindingResult.hasErrors()) {
             log.info("has errors.......");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addAttribute("tno", todoDTO.getTno());
             return "redirect:/todo/modify";
         }
-
-        log.info("todoDTO :"+todoDTO);
-
         todoService.modify(todoDTO);
 
         redirectAttributes.addAttribute("tno", todoDTO.getTno());
 
-        return "redirect:/goods/goodsDetail?goods_id="+goodsIdValue;
+        return "redirect:/goods/goodsDetail?goods_id="+todoDTO.getGoods_id_t_shopping_goods();
     }
 
     //    @ResponseBody
     @RequestMapping(value = "/list", method = {RequestMethod.GET})
-    public void list( @RequestParam Map<String, Object> goods_id, Model model) {
+    public void list( @RequestParam Map<String, Object> goods_id, Model model, TodoDTO todoDTO) {
         log.info("list get 호출");
-        model.addAttribute("totalModel", goods_id);
-        log.info("goods_id :" + goods_id);
-        goodsIdValue = (String) goods_id.get("goods_id");
-        log.info("goodsIdValue :"+ goodsIdValue);
+        getGoodsId(goods_id, model, todoDTO);
     }
 
     @ResponseBody
@@ -122,14 +140,22 @@ public class TodoController {
                                          Model model) {
 
         log.info("list post 호출");
-
         if (bindingResult.hasErrors()) {
             pageRequestDTO = PageRequestDTO.builder().build();
         }
+        pageRequestDTO.setGoods_id_t_shopping_goods(goods_id_t_shopping_goods);
+        log.info("pageRequestDTO.goods_id_t_shopping_goods : ");
         model.addAttribute("responseDTO", todoService.getList(pageRequestDTO));
 
         PageResponseDTO<TodoDTO> pageResponseDTO = todoService.getList(pageRequestDTO);
         log.info("pageResponseDTO 입니다. : " + pageResponseDTO);
         return pageResponseDTO;
+    }
+
+    public int getGoodsId(@RequestParam Map<String, Object> goods_id, Model model, TodoDTO todoDTO) {
+        model.addAttribute("totalModel", goods_id);
+        todoDTO.setGoods_id_t_shopping_goods(Integer.parseInt((String) goods_id.get("goods_id")));
+        log.info("goods_id_t_shopping_goods :"+ todoDTO.getGoods_id_t_shopping_goods());
+        return goods_id_t_shopping_goods = todoDTO.getGoods_id_t_shopping_goods();
     }
 }

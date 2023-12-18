@@ -14,7 +14,10 @@
     <title>Hello, world!</title>
 </head>
 <body>
-
+<%--goods_id의 세션 정보를 받아옴--%>
+<%
+    String goods_id = session.getAttribute("goods_id").toString();
+%>
 <div class="container-fluid">
     <div class="row">
         <!-- 기존의 <h1>Header</h1> -->
@@ -99,10 +102,10 @@
                             <tbody id="boardData">
                             <c:forEach items="${responseDTO.dtoList}" var="dto">
                                 <tr>
-                                    <th scope="row"><c:out value="${dto.tno}"/></th>
+                                    <th scope="row"><c:out value="${dto.tnoNumber}"/></th>
                                     <td>
-                                        <a href="/todo/read?tno=${dto.tno}&${pageRequestDTO.link}"
-                                           class="text-decoration-none" data-tno="${dto.tno}">
+                                        <a href="/todo/read?tno=${dto.tnoNumber}&${pageRequestDTO.link}"
+                                           class="text-decoration-none" data-tno="${dto.tnoNumber}">
                                             <c:out value="${dto.title}"/>
                                         </a>
                                     </td>

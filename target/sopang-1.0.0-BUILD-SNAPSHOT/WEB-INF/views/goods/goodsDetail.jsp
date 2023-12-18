@@ -151,16 +151,14 @@
 
         </div>
     </div>
-    <%--<script src="${contextPath}/resources/js/goodsboard.js"></script>--%>
+
+    <%
+        String goods_id = request.getParameter("goods_id");
+        session.setAttribute("goods_id", goods_id);
+    %>
 
     <script>
-
         document.getElementById("detailInfo3").addEventListener("click", boardNumData);
-
-        // let elements = document.getElementsByClassName("viewRead");
-        // for (let i = 0; i < elements.length; i++) {
-        //     elements[i].addEventListener("click", viewread);
-        // }
 
         function boardNumData() {
             urlData = window.location.href;
@@ -284,12 +282,11 @@
                 let row = document.createElement("tr");
                 //번호
                 let tnoCell = document.createElement("td");
-                tnoCell.textContent = dto.tno;
+                tnoCell.textContent = dto.tnoNumber;
                 row.appendChild(tnoCell);
                 //제목
                 let titleCell = document.createElement("td");
                 let titleLink = document.createElement("a");
-                // titleLink.href = "/todo/read?tno=" + dto.tno;
                 titleLink.textContent = dto.title;
                 titleLink.setAttribute("onclick", "viewread(event)");
                 titleLink.setAttribute("name", dto.tno);
@@ -340,17 +337,18 @@
 
         function register(event) {
             console.log("register 진입");
-            console.log("register 진입")
             $.ajax({
-                type: "post",
+                type: "POST",
                 url: "${contextPath}/todo/register",
                 dataType: "html",
                 success: function (data) {
                     console.log("register 로딩 성공");
                     detailInfo03.innerHTML = data;
                 },
-                error: function e(xhr, status, error) {
-                    console.error("Error loading data. Status: " + status + ", Error: " + error);
+                error: function e(data, textStatus) {
+                    console.error("오류발생!");
+                    alert("로그인 후 등록해주세요!");
+                    window.location.assign("/member/login");
                 }
             })
         }
@@ -378,7 +376,6 @@
                         formObj.submit()
 
                     }, false);
-
                     document.querySelector(".btn-danger").addEventListener("click", function (e) {
 
                         e.preventDefault()
@@ -388,11 +385,11 @@
                         formObj.method = "post"
 
                         formObj.submit()
-
                     }, false);
                 },
-                error: function e(xhr, status, error) {
-                    console.error("Error loading data. Status: " + status + ", Error: " + error);
+                error: function e(data, textStatus) {
+                    console.log("작성자가 아님");
+                    alert("작성자만 수정할수 있습니다!");
                 }
             })
         }
@@ -460,8 +457,4 @@
                 formObj.submit();
             }
         }
-
     </script>
-
-
-

@@ -14,7 +14,10 @@
     <title>Hello, world!</title>
 </head>
 <body>
-
+<%--goods_id의 세션 정보를 받아옴--%>
+<%
+    String goods_id = session.getAttribute("goods_id").toString();
+%>
 <div class="container-fluid">
     <div class="row">
         <!-- 기존의 <h1>Header</h1> -->
@@ -52,31 +55,34 @@
                     <div class="card-body">
                         <form action="/todo/modify" method="post" id="modForm">
 
+<%--                            <div class="input-group mb-3">--%>
+<%--                                <span class="input-group-text">TNO</span>--%>
+<%--                                <input type="text" name="tno" class="form-control"--%>
+<%--                                       value=--%>
+<%--                                       <c:out value="${dto.tno}"></c:out> readonly>--%>
+<%--                            </div>--%>
                             <div class="input-group mb-3">
-                                <span class="input-group-text">TNO</span>
-                                <input type="text" name="tno" class="form-control"
-                                       value=
-                                       <c:out value="${dto.tno}"></c:out> readonly>
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Title</span>
+                                <span class="input-group-text">글 재목</span>
                                 <input type="text" name="title" class="form-control"
                                        value=
                                        <c:out value="${dto.title}"></c:out>>
                             </div>
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text">content</span>
+                                <span class="input-group-text">글 내용</span>
                                 <input type="text" name="content" class="form-control"
                                        value=
                                        <c:out value="${dto.content}"></c:out>>
                             </div>
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Writer</span>
+                                <span class="input-group-text">글쓴이</span>
                                 <input type="text" name="writer" class="form-control"
                                        value=
                                        <c:out value="${dto.writer}"></c:out> readonly>
+                                <%--외래키로 연결된 세션 정보를 form으로 전송--%>
+                                <input type="hidden" name="goods_id_t_shopping_goods" value="${goods_id}">
+                                <input type="hidden" name="tno" value="${dto.tno}">
 
                             </div>
 

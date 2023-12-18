@@ -47,26 +47,32 @@
                         Featured
                     </div>
                     <div class="card-body">
+<%--                        <div class="input-group mb-3">--%>
+<%--                            <span class="input-group-text">TNO</span>--%>
+<%--                            <input type="text" name="tno" class="form-control"--%>
+<%--                                   value=<c:out value="${dto.tno}"></c:out> readonly>--%>
+<%--                        </div>--%>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">TNO</span>
-                            <input type="text" name="tno" class="form-control"
-                                   value=<c:out value="${dto.tno}"></c:out> readonly>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Title</span>
+                            <span class="input-group-text">글 제목</span>
                             <input type="text" name="title" class="form-control"
                                    value='<c:out value="${dto.title}"></c:out>' readonly>
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">DueDate</span>
-                            <input type="datetime-local" name="dueDate" class="form-control"
+                            <span class="input-group-text">글 내용</span>
+                            <input type="text" name="content" class="form-control"
+                                   value='<c:out value="${dto.content}"></c:out>' readonly>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">작성일자</span>
+                            <input type="text" name="dueDate" class="form-control"
                                    value=<c:out value="${dto.dueDate}"></c:out> readonly>
 
                         </div>
 
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Writer</span>
+                            <span class="input-group-text">글쓴이</span>
                             <input type="text" name="writer" class="form-control"
                                    value='<c:out value="${dto.writer}"></c:out>' readonly>
 
@@ -105,11 +111,6 @@
 
     </div>
 </div>
-<script>
-    function modify1() {
-        console.log("dto :"+${dto});
-    }
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 

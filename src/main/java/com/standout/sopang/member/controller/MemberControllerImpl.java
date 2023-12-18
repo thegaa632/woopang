@@ -47,14 +47,14 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			//로그인 여부 isLogOn와 회원정보 memberInfo를 세션에 저장한다.
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", memberDTO);
-			return "/main/main";
+			return "redirect:/main/main";
 			//메인페이지로 이동.
 
 		} else { //memberVO가 존재하지않을 경우 message를 담아 return + login페이지로 이동
 			String message = "아이디나  비밀번호가 틀립니다. 다시 로그인해주세요";
 			model.addAttribute("message", message);
 		}
-		return "/member/login";
+		return "redirect:/member/login";
 	}
 
 

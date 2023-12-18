@@ -2,7 +2,7 @@
 <Configuration status="WARN" name="MyApp" packages="com.standout">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n" />
+            <PatternLayout charset="UTF-8" pattern="%d{hh:mm:ss} %5p [%c] %m%n"/>
         </Console>
     </Appenders>
     <Loggers>

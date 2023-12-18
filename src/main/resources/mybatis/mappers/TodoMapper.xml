@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.TodoMapper">
 
+<mapper namespace="mapper.TodoMapper">
     <sql id="search">
         <where>
             <if test="types != null and types.length > 0">
@@ -31,15 +31,9 @@
         </where>
     </sql>
 
-
-<!--    <select id="getTime" resultType="string">-->
-<!--        select now()-->
-<!--    </select>-->
-
     <insert id="insert" parameterType="todoVO" >
-        insert into tbl_todo (title,content, dueDate, writer, finished) values  (#{title}, #{content}, NOW(), #{writer}, 0)
+        insert into tbl_todo (goods_id_t_shopping_goods, title, content, dueDate, writer, finished) values  (#{goods_id_t_shopping_goods}, #{title}, #{content}, NOW(), #{writer}, 0)
     </insert>
-
 
     <select id="selectAll" resultType="com.standout.sopang.springex.domain.TodoVO">
         select *
@@ -51,7 +45,6 @@
         select * from tbl_todo where tno  = #{tno}
     </select>
 
-
     <delete id="delete">
         delete from tbl_todo where tno = #{tno}
     </delete>
@@ -60,22 +53,26 @@
         update tbl_todo set title = #{title} ,content = #{content}, dueDate = NOW(), finished= #{finished} where tno = #{tno}
     </update>
 
-    <!--    <select id="selectList" resultType="domain.com.standout.sopang.springex.TodoVO">-->
-    <!--        select * from tbl_todo order by tno desc limit #{skip}, #{size}-->
-    <!--    </select>-->
-
     <select id="selectList" resultType="com.standout.sopang.springex.domain.TodoVO">
-        select * from tbl_todo
+        SELECT
+        ROW_NUMBER() OVER (ORDER BY tno) AS tnoNumber,
+        goods_id_t_shopping_goods,
+        tno,
+        title,
+        content,
+        writer,
+        dueDate,
+        finished
+        FROM
+        tbl_todo
         <include refid="search"/>
+        WHERE goods_id_t_shopping_goods = #{goods_id_t_shopping_goods}
         order by tno desc limit #{skip}, #{size}
     </select>
-
-
 
     <select id="getCount" resultType="int">
         select count(tno) from tbl_todo
         <include refid="search"/>
     </select>
-
 
 </mapper>

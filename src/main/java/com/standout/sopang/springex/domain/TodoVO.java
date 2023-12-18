@@ -16,6 +16,10 @@ public class TodoVO {
 
     private Long tno;
 
+    private Long tnoNumber;
+
+    private int goods_id_t_shopping_goods;
+
     private String title;
 
     private String content;

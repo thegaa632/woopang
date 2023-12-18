@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.standout.sopang.member.dto.MemberDTO"%>
 
 <!doctype html>
 <html lang="en">
@@ -13,7 +14,6 @@
     <title>Hello, world!</title>
 </head>
 <body>
-
 <div class="container-fluid">
     <div class="row">
         <!-- 기존의 <h1>Header</h1> -->
@@ -49,20 +49,20 @@
                     <div class="card-body">
                         <form action="/todo/register" method="post">
                             <div class="input-group mb-3">
-                                <span class="input-group-text">Title</span>
+                                <span class="input-group-text">글 제목</span>
                                 <input type="text" name="title" class="form-control" placeholder="Title">
                             </div>
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text">content</span>
+                                <span class="input-group-text">글 내용</span>
                                 <input type="text" name="content" class="form-control" placeholder="content">
                             </div>
 
 
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Writer</span>
-                                <input type="text" name="writer" class="form-control" placeholder="Writer">
-                            </div>
+<%--                            <div class="input-group mb-3">--%>
+<%--                                <span class="input-group-text">글쓴이</span>--%>
+<%--                                <input type="text" name="writer" class="form-control" value="${}" readonly>--%>
+<%--                            </div>--%>
 
                             <div class="my-4">
                                 <div class="float-end">
@@ -70,7 +70,9 @@
                                     <button type="result" class="btn btn-secondary">Reset</button>
                                 </div>
                             </div>
-<%--                            <input type="hidden" name="goods_id" value="${goods_id}">--%>
+                            <%--외래키로 연결된 세션 정보를 form으로 전송--%>
+                            <input type="hidden" name="goods_id_t_shopping_goods" value="${goods_id}">
+                            <input type="hidden" name="writer" value="${memberInfo.member_id}">
                         </form>
 
                         <script>

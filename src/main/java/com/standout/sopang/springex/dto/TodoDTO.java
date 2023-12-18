@@ -18,7 +18,9 @@ public class TodoDTO {
 
     private Long tno;
 
-    private Long tno_number;
+    private Long tnoNumber;
+
+    private int goods_id_t_shopping_goods;
 
     @NotEmpty
     private String title;
