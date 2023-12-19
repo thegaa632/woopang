@@ -1,6 +1,11 @@
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<fmt:parseDate var="parsedDate" value="${dto.dueDate}" pattern="EEE MMM dd HH:mm:ss zzz yyyy" />
+<fmt:formatDate var="formattedDate" value="${parsedDate}" pattern="yyyy. MM. dd. HH:mm" />
+<%--날짜 수정중--%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -66,8 +71,9 @@
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">작성일자</span>
-                            <input type="text" name="dueDate" class="form-control"
-                                   value=<c:out value="${dto.dueDate}"></c:out> readonly>
+                            <input type="datetime-local" name="dueDate" class="form-control"
+                                   value='<c:out value="${dto.dueDate}"></c:out>' readonly>
+                            <P class="form-control"><c:out value="${formattedDate}"/></P>
 
                         </div>
 

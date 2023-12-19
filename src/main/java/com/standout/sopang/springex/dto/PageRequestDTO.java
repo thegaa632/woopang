@@ -62,7 +62,8 @@ public class PageRequestDTO {
         if(finished){
             builder.append("&finished=on");
         }
-
+//
+//        log.info("types.length :" + types.length, "types : " + types);
         if(types != null && types.length > 0){
             for (int i = 0; i < types.length ; i++) {
                 builder.append("&types=" + types[i]);
@@ -84,15 +85,9 @@ public class PageRequestDTO {
         if(to != null){
             builder.append("&to=" + to.toString());
         }
-
+//
         return builder.toString();
     }
-
-//    public int checkGoodsId(TodoDTO todoDTO){
-//        goods_id_t_shopping_goods = todoDTO.getGoods_id_t_shopping_goods();
-//        log.info("goods_id_t_shopping_goods :" +goods_id_t_shopping_goods);
-//        return Integer.parseInt(String.valueOf(goods_id_t_shopping_goods));
-//    }
 
     public boolean checkType(String type){
 

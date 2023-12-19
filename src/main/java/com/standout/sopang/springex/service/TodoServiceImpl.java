@@ -56,11 +56,7 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public void modify(TodoDTO todoDTO) {
 
-        log.info("todoDTO : "+ todoDTO);
-
         TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class );
-
-        log.info("todoVO : " + todoVO);
 
         todoMapper.update(todoVO);
 
@@ -69,10 +65,8 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
 
-        log.info("pageRequestDTO : "+ pageRequestDTO);
         //vo -> dto 리스트 조회하고 변경
         List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
-        log.info("voList : " + voList);
 
         List<TodoDTO> dtoList = voList.stream()
                 .map(vo -> modelMapper.map(vo, TodoDTO.class))

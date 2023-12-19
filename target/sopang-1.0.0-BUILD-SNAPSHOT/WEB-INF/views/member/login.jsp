@@ -23,8 +23,8 @@
 
 		<!-- id, password 입력 -->
 		<input class="form-control form-control-lg rounded-0 mb-3"
-			name="member_id" type="text" placeholder="아이디" required> 
-			
+			 name="member_id" type="text" placeholder="아이디" required>
+
 		<input
 			class="form-control form-control-lg rounded-0 mb-3" name="member_pw"
 			type="password" placeholder="비밀번호" required>

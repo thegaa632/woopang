@@ -1,6 +1,7 @@
+<%@ page import="com.standout.sopang.springex.dto.PageResponseDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%--    PageResponseDTO pageResponseDTO = (PageResponseDTO) session.getAttribute("responseDTO");--%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -14,33 +15,29 @@
     <title>Hello, world!</title>
 </head>
 <body>
-<%--goods_id의 세션 정보를 받아옴--%>
-<%
-    String goods_id = session.getAttribute("goods_id").toString();
-%>
 <div class="container-fluid">
     <div class="row">
         <!-- 기존의 <h1>Header</h1> -->
         <div class="row">
             <div class="col">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="#">Navbar</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                                <a class="nav-link" href="#">Features</a>
-                                <a class="nav-link" href="#">Pricing</a>
-                                <a class="nav-link disabled">Disabled</a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
+<%--                <nav class="navbar navbar-expand-lg navbar-light bg-light">--%>
+<%--                    <div class="container-fluid">--%>
+<%--                        <a class="navbar-brand" href="#">Navbar</a>--%>
+<%--                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"--%>
+<%--                                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"--%>
+<%--                                aria-expanded="false" aria-label="Toggle navigation">--%>
+<%--                            <span class="navbar-toggler-icon"></span>--%>
+<%--                        </button>--%>
+<%--                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">--%>
+<%--                            <div class="navbar-nav">--%>
+<%--                                <a class="nav-link active" aria-current="page" href="#">Home</a>--%>
+<%--                                <a class="nav-link" href="#">Features</a>--%>
+<%--                                <a class="nav-link" href="#">Pricing</a>--%>
+<%--                                <a class="nav-link disabled">Disabled</a>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </nav>--%>
             </div>
         </div>
         <!-- header end -->
@@ -50,16 +47,16 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Search </h5>
-                        <form action="/todo/list" method="get">
+                        <form action="/todo/list" method="post">
                             <input type="hidden" name="size" value="${pageRequestDTO.size}">
-                            <div class="mb-3">
-                                <input type="checkbox" name="finished" ${pageRequestDTO.finished?"checked":""} >완료여부
-                            </div>
+<%--                            <div class="mb-3">--%>
+<%--                                <input type="checkbox" name="finished" ${pageRequestDTO.finished?"checked":""} >완료여부--%>
+<%--                            </div>--%>
                             <div class="mb-3">
                                 <input type="checkbox" name="types"
-                                       value="t" ${pageRequestDTO.checkType("t")?"checked":""}>제목
+                                       value="searchTitle" ${pageRequestDTO.checkType("searchTitle")?"checked":""}>제목
                                 <input type="checkbox" name="types"
-                                       value="w"  ${pageRequestDTO.checkType("w")?"checked":""}>작성자
+                                       value="searchWriter"  ${pageRequestDTO.checkType("searchWriter")?"checked":""}>작성자
                                 <input type="text" name="keyword" class="form-control"
                                        value='<c:out value="${pageRequestDTO.keyword}"/>'>
                             </div>
@@ -69,7 +66,7 @@
                             </div>
                             <div class="input-group mb-3">
                                 <div class="float-end">
-                                    <button class="btn btn-primary" type="submit">Search</button>
+                                    <button class="btn btn-primary" id="search">Search</button>
                                     <button class="btn btn-info clearBtn" type="reset">Clear</button>
                                 </div>
                             </div>
@@ -126,24 +123,23 @@
 
                         <div class="float-end">
                             <ul class="pagination flex-wrap" id="boardDataNum">
-                                <c:if test="${responseDTO.prev}">
+                                <c:if test="${pageResponseDTO.prev}">
                                     <li class="page-item">
-                                        <a class="page-link" data-num="${responseDTO.start -1}">Previous</a>
+                                        <a class="page-link" data-num="${pageResponseDTO.start -1}">Previous</a>
                                     </li>
                                 </c:if>
 
-                                <c:forEach begin="${responseDTO.start}" end="${responseDTO.end}" var="num">
-                                    <li class="page-item ${responseDTO.page == num? "active":""} ">
+                                <c:forEach begin="${pageResponseDTO.start}" end="${pageResponseDTO.end}" var="num">
+                                    <li class="page-item ${pageResponseDTO.page == num? "active":""} ">
                                         <a class="page-link" data-num="${num}">${num}</a></li>
                                 </c:forEach>
 
-                                <c:if test="${responseDTO.next}">
+                                <c:if test="${pageResponseDTO.next}">
                                     <li class="page-item">
-                                        <a class="page-link" data-num="${responseDTO.end + 1}">Next</a>
+                                        <a class="page-link" data-num="${pageResponseDTO.end + 1}">Next</a>
                                     </li>
                                 </c:if>
                             </ul>
-
                         </div>
                     <script>
                             document.querySelector(".pagination").addEventListener("click", function (e) {

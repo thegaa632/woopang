@@ -55,12 +55,6 @@
                     <div class="card-body">
                         <form action="/todo/modify" method="post" id="modForm">
 
-<%--                            <div class="input-group mb-3">--%>
-<%--                                <span class="input-group-text">TNO</span>--%>
-<%--                                <input type="text" name="tno" class="form-control"--%>
-<%--                                       value=--%>
-<%--                                       <c:out value="${dto.tno}"></c:out> readonly>--%>
-<%--                            </div>--%>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">글 재목</span>
                                 <input type="text" name="title" class="form-control"

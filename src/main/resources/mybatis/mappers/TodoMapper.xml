@@ -8,10 +8,10 @@
         <where>
             <if test="types != null and types.length > 0">
                 <foreach collection="types" item="type" open="(" close=") " separator=" OR ">
-                    <if test="type == 't'.toString()">
+                    <if test="type == 'searchTitle'.toString()">
                         title like concat('%', #{keyword}, '%')
                     </if>
-                    <if test="type == 'w'.toString()">
+                    <if test="type == 'searchWriter'.toString()">
                         writer like concat('%', #{keyword}, '%')
                     </if>
                 </foreach>
@@ -65,8 +65,8 @@
         finished
         FROM
         tbl_todo
-        <include refid="search"/>
         WHERE goods_id_t_shopping_goods = #{goods_id_t_shopping_goods}
+        <include refid="search"/>
         order by tno desc limit #{skip}, #{size}
     </select>
 

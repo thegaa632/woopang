@@ -152,7 +152,7 @@
         </div>
     </div>
 
-    <%
+        <%
         String goods_id = request.getParameter("goods_id");
         session.setAttribute("goods_id", goods_id);
     %>
@@ -183,6 +183,7 @@
                     document.getElementById("register").addEventListener("click", function (event) {
                         register(event);
                     });
+                    document.getElementById("search").addEventListener("click", search)
                 },
 
                 error: function e(xhr, status, error) {
@@ -198,6 +199,23 @@
             $.ajax({
                 type: "POST",
                 url: "${contextPath}/todo/list", //  URL을 지정
+                dataType: "JSON",
+                success: function (data) {
+                    console.log("data : "+ data);
+                    console.log("boardList 진입");
+                    updatePage(data);
+                    error: function e(xhr, status, error) {
+                        console.error("Error loading data. Status: " + status + ", Error: " + error);
+                    }
+                }
+            });
+        }
+
+        function search() {
+            // Ajax를 사용하여 서버에 데이터 요청
+            $.ajax({
+                type: "POST",
+                url: "${contextPath}/todo/search", //  URL을 지정
                 dataType: "JSON",
                 success: function (data) {
                     updatePage(data);
@@ -267,7 +285,6 @@
             }
         }
 
-        // 중복코드 처네!!!!!!!!!!!!!!!!!!!!!!!!!
         function updatePage(data) {
             //<======게시판 목록 부분======>
             console.log('new data 받음 :' + data);
@@ -310,16 +327,28 @@
                 row.appendChild(finishedCell);
 
                 boardData.appendChild(row);
-
                 //<======게시판 목록 부분======>
             })
             //<======게시판 페이징 부분======>
             let responseDTO = data; //햇갈리니까 responseDTO 그대로 사용함
+            // let pageResponseDTO = data
             let boardDataNum = document.getElementById("boardDataNum");
             boardDataNum.innerHTML = ""; // 혹시 모를 기존 데이터 초기화
             // 페이징 처리 로직 추가
             // responseDTO에서 start, end, page 등을 활용하여 페이지 번호를 동적으로 생성
+            // 10페이지 초과시 11페이지
+            if (responseDTO.prev) {
+                let li = document.createElement("li");
+                li.className = "page-item"; // 이전 버튼을 감싸는 li의 클래스
+                let a = document.createElement("a");
+                a.className = "page-link";
+                a.textContent = "Previous";
+                a.setAttribute("data-num", responseDTO.start - 1); // 이전 페이지 번호를 속성에 추가
+                li.appendChild(a);
+                boardDataNum.appendChild(li); // boardDataNum에 이전 페이지 링크를 추가
+            }
             for (let num = responseDTO.start; num <= responseDTO.end; num++) {
+                // var paginationUl = $("#boardDataNum");
                 let li = document.createElement("li");
                 li.className = "page-item " + (responseDTO.page == num ? "active" : "");
                 //셀 생성하고 페이지 번호에 맞는 칸 추가
@@ -330,8 +359,17 @@
                 li.appendChild(a);
                 //번호부여
                 boardDataNum.appendChild(li);
-                //<======게시판 페이징 부분======>
-                // history.pushState({ page: url }, "", url);
+            }
+            //10페이지 초과시 11페이지로 이동
+            if (responseDTO.next) {
+                let li = document.createElement("li");
+                li.className = "page-item"; // 이전 버튼을 감싸는 li의 클래스
+                let a = document.createElement("a");
+                a.className = "page-link";
+                a.textContent = "Next";
+                a.setAttribute("data-num", responseDTO.end + 1); // 이전 페이지 번호를 속성에 추가
+                li.appendChild(a);
+                boardDataNum.appendChild(li); // boardDataNum에 다음 페이지 링크를 추가
             }
         }
 
@@ -355,7 +393,7 @@
 
         function modify(event) {
             console.log("modify 진입");
-                let dto = event.target.getAttribute('value');
+            let dto = event.target.getAttribute('value');
             console.log("tno : " + dto);
             $.ajax({
                 type: "post",
