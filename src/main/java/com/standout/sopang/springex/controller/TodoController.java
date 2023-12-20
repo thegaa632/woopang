@@ -1,13 +1,11 @@
 package com.standout.sopang.springex.controller;
 
-import com.mysql.cj.Session;
 import com.standout.sopang.member.dto.MemberDTO;
 import com.standout.sopang.springex.dto.PageRequestDTO;
 import com.standout.sopang.springex.dto.PageResponseDTO;
 import com.standout.sopang.springex.dto.TodoDTO;
 import com.standout.sopang.springex.service.TodoService;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -162,28 +160,13 @@ public class TodoController {
 
         HttpSession session = request.getSession();
         session.setAttribute("responseDTO", pageResponseDTO);
-
+        log.info("list가 성공적으로 출력됨");
         return pageResponseDTO;
     }
 
     public int getGoodsId(@RequestParam Map<String, Object> goods_id, Model model, TodoDTO todoDTO) {
-//        model.addAttribute("totalModel", goods_id);
         todoDTO.setGoods_id_t_shopping_goods(Integer.parseInt((String) goods_id.get("goods_id")));
         return goods_id_t_shopping_goods = todoDTO.getGoods_id_t_shopping_goods();
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/search", method = {RequestMethod.POST})
-    public PageResponseDTO<TodoDTO> search(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                                           Model model, HttpServletRequest request,
-                                           @RequestParam(name = "types", required = false) String[] types,
-                                           @RequestParam("keyword") String keyword) {
-        log.info("search_writer :" + Arrays.toString(types));
-        log.info("keyword :" + keyword);
-
-        PageResponseDTO pageResponseDTO = list(pageRequestDTO, bindingResult, redirectAttributes,
-                model, request);
-        log.info("pageResponseDTO : " + pageResponseDTO);
-        return pageResponseDTO;
-    }
 }

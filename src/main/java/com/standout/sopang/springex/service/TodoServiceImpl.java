@@ -7,6 +7,7 @@ import com.standout.sopang.springex.dto.TodoDTO;
 import com.standout.sopang.springex.mapper.TodoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.ibatis.session.SqlSession;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class TodoServiceImpl implements TodoService{
+public class TodoServiceImpl implements TodoService {
 
     @Autowired
     private final TodoMapper todoMapper;
@@ -29,7 +30,7 @@ public class TodoServiceImpl implements TodoService{
     public void register(TodoDTO todoDTO) {
 
 
-        TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class );
+        TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
 
 
         todoMapper.insert(todoVO);
@@ -56,7 +57,7 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public void modify(TodoDTO todoDTO) {
 
-        TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class );
+        TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);
 
         todoMapper.update(todoVO);
 
@@ -66,8 +67,12 @@ public class TodoServiceImpl implements TodoService{
     public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
 
         //vo -> dto 리스트 조회하고 변경
-        List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+        log.info("getList 진입");
+        log.info("pageRequestDTO : " + pageRequestDTO);
 
+        log.info(todoMapper.selectList(pageRequestDTO));
+        List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+        log.info("dtoList 진입");
         List<TodoDTO> dtoList = voList.stream()
                 .map(vo -> modelMapper.map(vo, TodoDTO.class))
                 .collect(Collectors.toList());
@@ -84,5 +89,5 @@ public class TodoServiceImpl implements TodoService{
 
     }
 
-
 }
+

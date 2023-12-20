@@ -7,12 +7,12 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="goods" value="${goodsMap.goodsDTO}"/>
 <c:set var="imageList" value="${goodsMap.imageList }"/>
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-
 <div class="container">
     <div class="row">
         <div class="p-0 align-items-center gap-3 mt-5">
@@ -183,7 +183,9 @@
                     document.getElementById("register").addEventListener("click", function (event) {
                         register(event);
                     });
-                    document.getElementById("search").addEventListener("click", search)
+                    document.getElementById("search").addEventListener("click", function (event) {
+                        boardList(event);
+                    });
                 },
 
                 error: function e(xhr, status, error) {
@@ -201,6 +203,7 @@
                 url: "${contextPath}/todo/list", //  URL을 지정
                 dataType: "JSON",
                 success: function (data) {
+
                     console.log("data : "+ data);
                     console.log("boardList 진입");
                     updatePage(data);
@@ -211,20 +214,22 @@
             });
         }
 
-        function search() {
-            // Ajax를 사용하여 서버에 데이터 요청
-            $.ajax({
-                type: "POST",
-                url: "${contextPath}/todo/search", //  URL을 지정
-                dataType: "JSON",
-                success: function (data) {
-                    updatePage(data);
-                    error: function e(xhr, status, error) {
-                        console.error("Error loading data. Status: " + status + ", Error: " + error);
-                    }
-                }
-            });
-        }
+        <%--function search() {--%>
+        <%--    console.log("search 진입")--%>
+        <%--    // Ajax를 사용하여 서버에 데이터 요청--%>
+        <%--    $.ajax({--%>
+        <%--        type: "GET",--%>
+        <%--        url: "${contextPath}/todo/list", //  URL을 지정--%>
+        <%--        dataType: "json",--%>
+        <%--        success: function (data) {--%>
+        <%--            console.log("search 데이터 불러오기 성공")--%>
+        <%--            updatePage(data);--%>
+        <%--            error: function e(xhr, status, error) {--%>
+        <%--                console.error("Error loading data. Status: " + status + ", Error: " + error);--%>
+        <%--            }--%>
+        <%--        }--%>
+        <%--    });--%>
+        <%--}--%>
 
         function viewread(event) {
             // div를 클릭했을 때의 이벤트 핸들러

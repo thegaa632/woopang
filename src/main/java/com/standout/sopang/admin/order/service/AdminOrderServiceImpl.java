@@ -40,7 +40,6 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 	ConvertList convertList;
 	
 	
-	//주문목록
 	public List<OrderDTO>listNewOrder(Map condMap) throws Exception{
 //		List<OrderDTO> orderConverDTOList	=convertList.orderConverDTO(adminOrderDAO.selectNewOrderList(condMap));
 
@@ -49,7 +48,6 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 	}
 	
 
-	//주문수정 - 배송수정
 	@Override
 	public void  modifyDeliveryState(Map deliveryMap) throws Exception{
 		adminOrderDAO.updateDeliveryState(deliveryMap);

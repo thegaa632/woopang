@@ -38,8 +38,9 @@
         </Logger>
 
         <!-- Root Logger -->
-        <Root level="warn">
-            <AppenderRef ref="Console"/>
-        </Root>
+            <Root level="debug">
+                <AppenderRef ref="Console"/>
+            </Root>
+            <Logger name="org.apache.ibatis" level="TRACE"/>
     </Loggers>
 </Configuration>
