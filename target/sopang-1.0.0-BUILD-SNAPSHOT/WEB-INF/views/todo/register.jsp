@@ -46,7 +46,7 @@
                         Featured
                     </div>
                     <div class="card-body">
-                        <form action="/todo/register" method="post">
+                        <form id="registForm">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">글 제목</span>
                                 <input type="text" name="title" class="form-control" placeholder="Title">
@@ -58,14 +58,14 @@
                             </div>
 
 
-<%--                            <div class="input-group mb-3">--%>
-<%--                                <span class="input-group-text">글쓴이</span>--%>
-<%--                                <input type="text" name="writer" class="form-control" value="${}" readonly>--%>
-<%--                            </div>--%>
+                            <%--                            <div class="input-group mb-3">--%>
+                            <%--                                <span class="input-group-text">글쓴이</span>--%>
+                            <%--                                <input type="text" name="writer" class="form-control" value="${}" readonly>--%>
+                            <%--                            </div>--%>
 
                             <div class="my-4">
                                 <div class="float-end">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary" id="regist">Submit</button>
                                     <button type="result" class="btn btn-secondary">Reset</button>
                                 </div>
                             </div>

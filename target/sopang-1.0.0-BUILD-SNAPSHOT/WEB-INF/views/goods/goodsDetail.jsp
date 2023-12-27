@@ -159,7 +159,7 @@
 
     <script>
         document.getElementById("detailInfo3").addEventListener("click", boardNumData);
-
+        var contextPath = '<%= request.getContextPath() %>'
         function boardNumData() {
             urlData = window.location.href;
             let url = new URL(urlData);
@@ -380,18 +380,33 @@
 
         function register(event) {
             console.log("register 진입");
+            console.log("contextPath : " + contextPath);
+
             $.ajax({
                 type: "POST",
-                url: "${contextPath}/todo/register",
+                url:  contextPath + "/todo/register",
                 dataType: "html",
                 success: function (data) {
                     console.log("register 로딩 성공");
                     detailInfo03.innerHTML = data;
+                    console.log("등록 작동")
+                    const registForm = document.getElementById("registForm")
+                    console.log("registForm :" + registForm);
+                    document.getElementById("regist").addEventListener("click", function (e) {
+                        console.log("등록 작동")
+                        e.preventDefault()
+                        e.stopPropagation()
+                        registForm.action =  contextPath + "/todo/register"
+                        registForm.method = "post"
+
+                        registForm.submit()
+
+                    }, false);
                 },
                 error: function e(data, textStatus) {
                     console.error("오류발생!");
                     alert("로그인 후 등록해주세요!");
-                    window.location.assign("/member/login");
+                    window.location.assign(contextPath + "/member/login");
                 }
             })
         }
@@ -424,7 +439,7 @@
                         e.preventDefault()
                         e.stopPropagation()
 
-                        formObj.action = `/todo/remove?tno=` + dto;
+                        formObj.action = contextPath + "/todo/remove?tno=" + dto;
                         formObj.method = "post"
 
                         formObj.submit()

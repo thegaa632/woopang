@@ -54,7 +54,7 @@ public class TodoController {
         memberDTO = (MemberDTO) session.getAttribute("memberInfo");
         log.info("memberDTO : " + memberDTO.toString());
         String member_id = memberDTO.getMember_id();
-
+        String contextPath = request.getContextPath();
         if (member_id == null) {
             log.info("로그인 정보 없음");
             return "noId";
